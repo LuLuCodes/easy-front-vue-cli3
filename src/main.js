@@ -7,6 +7,17 @@ import './components';
 
 Vue.config.productionTip = false;
 
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+  if (to.path !== '/login' && !token) {
+    return next('/login');
+  } else if (to.path === '/login' && token) {
+    return next('/home');
+  } else {
+    next();
+  }
+});
+
 new Vue({
   router,
   store,
