@@ -90,3 +90,9 @@ const cdn = {
     ]
 }
 ```
+
+### 新建页面或组件
+```
+yarn run new:view // 新建页面
+yarn run new:comp // 新建组件
+```
