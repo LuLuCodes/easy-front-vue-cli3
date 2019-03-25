@@ -1,3 +1,100 @@
 // vue.config.js
+const CompressionPlugin = require('compression-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const path = require('path')
 module.exports = {
+  configureWebpack: () => ({
+    devtool: 'source-map',
+    resolve: {
+      alias: {
+        '~styles': path.resolve('./src/assets/styles')
+      }
+    }
+  }),
+  chainWebpack: config => {
+    // #region svg-config
+    const svgRule = config.module.rule('svg') // 找到svg-loader
+    svgRule.uses.clear() // 清除已有的loader, 如果不这样做会添加在此loader之后
+    svgRule.exclude.add(/node_modules/) // 正则匹配排除node_modules目录
+    svgRule // 添加svg新的loader处理
+      .test(/\.svg$/)
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+
+    // 修改images loader 添加svg处理
+    const imagesRule = config.module.rule('images')
+    imagesRule.exclude.add(path.resolve('src/assets/icons'))
+    // #endregion svg-config
+
+    if (process.env.NODE_ENV === 'production') {
+      // #region 图片压缩
+      config.module
+        .rule('images')
+        .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
+        .use('img-loader')
+        .loader('img-loader').options({
+          plugins: [
+            require('imagemin-jpegtran')(),
+            require('imagemin-pngquant')({
+              quality: [0.75, 0.85]
+            })
+          ]
+        })
+      // #endregion
+
+      // #region 启用GZip压缩
+      config
+        .plugin('compression')
+        .use(CompressionPlugin, {
+          asset: '[path].gz[query]',
+          algorithm: 'gzip',
+          test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
+          threshold: 10240,
+          minRatio: 0.8,
+          cache: true
+        })
+        .tap(args => {})
+
+      // #endregion
+
+      // #region 忽略生成环境打包的文件
+      var externals = {
+        vue: 'Vue',
+        axios: 'axios',
+        'vue-router': 'VueRouter',
+        vuex: 'Vuex'
+      }
+      config.externals(externals)
+      const cdn = {
+        css: [],
+        js: [
+          // vue
+          'https://static.myun.info/vue-2.6.10/vue.min.js',
+          // vue-router
+          'https://static.myun.info/vue-router-3.0.2/vue-router.min.js',
+          // vuex
+          'https://static.myun.info/vuex-3.1.0/vuex.min.js',
+          // axios
+          'https://static.myun.info/axios-0.18.0/axios.min.js'
+        ]
+      }
+      config.plugin('html')
+        .tap(args => {
+          args[0].cdn = cdn
+          return args
+        })
+      // #endregion
+
+      // #region 分析打包体积
+      if (process.env.IS_ANALYZE) {
+        config.plugin('webpack-report').use(BundleAnalyzerPlugin, [{
+          analyzerMode: 'static'
+        }])
+      }
+      // #endregion 分析打包体积
+    }
+  }
 }
