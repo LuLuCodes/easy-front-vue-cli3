@@ -1,16 +1,27 @@
 // vue.config.js
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const path = require('path')
 module.exports = {
-  configureWebpack: () => ({
-    devtool: 'source-map',
-    resolve: {
-      alias: {
-        '~styles': path.resolve('./src/assets/styles')
-      }
+  configureWebpack: config => {
+    if (process.env.NODE_ENV === 'production') {
+      config.plugins.push(
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            compress: {
+              warnings: false,
+              drop_debugger: true, // console
+              drop_console: true,
+              pure_funcs: ['console.log'] // 移除console
+            }
+          },
+          sourceMap: true,
+          parallel: true
+        })
+      )
     }
-  }),
+  },
   chainWebpack: config => {
     // #region svg-config
     const svgRule = config.module.rule('svg') // 找到svg-loader
@@ -33,16 +44,12 @@ module.exports = {
       // #region 图片压缩
       config.module
         .rule('images')
-        .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
-        .use('img-loader')
-        .loader('img-loader').options({
-          plugins: [
-            require('imagemin-jpegtran')(),
-            require('imagemin-pngquant')({
-              quality: [0.75, 0.85]
-            })
-          ]
+        .use('image-webpack-loader')
+        .loader('image-webpack-loader')
+        .options({
+          bypassOnDebug: true
         })
+        .end()
       // #endregion
 
       // #region 启用GZip压缩
