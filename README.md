@@ -96,3 +96,34 @@ const cdn = {
 yarn run new:view // 新建页面
 yarn run new:comp // 新建组件
 ```
+
+### 动态加载路由
+router/index.js是一个路由动态加载器，可以按以下两种方式创建路由
+
+#### 单独路由文件
+```
+// 在router文件夹下创建router.js文件，内容如下
+
+export default [
+  {
+    path: '/home',
+    component: () => import(/* webpackChunkName: "home" */ '@/views/home.vue')
+  }
+]
+```
+
+#### 按模块创建路由
+```
+// 在router文件夹下按模块创建路由文件夹，并在文件夹下创建index.js，内容如下
+
+export default [
+  {
+    path: '/good/good-list',
+    component: () => import(/* webpackChunkName: "good-list" */ '@/views/good/good-list/index.vue')
+  },
+  {
+    path: '/good/good-detail',
+    component: () => import(/* webpackChunkName: "good-detail" */ '@/views/good/good-detail')
+  }
+]
+```
