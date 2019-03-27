@@ -1,8 +1,8 @@
 // vue.config.js
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const CompressionPlugin = require('compression-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const path = require('path')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const path = require('path');
 module.exports = {
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
@@ -19,25 +19,25 @@ module.exports = {
           sourceMap: true,
           parallel: true
         })
-      )
+      );
     }
   },
   chainWebpack: config => {
     // #region svg-config
-    const svgRule = config.module.rule('svg') // 找到svg-loader
-    svgRule.uses.clear() // 清除已有的loader, 如果不这样做会添加在此loader之后
-    svgRule.exclude.add(/node_modules/) // 正则匹配排除node_modules目录
+    const svgRule = config.module.rule('svg'); // 找到svg-loader
+    svgRule.uses.clear(); // 清除已有的loader, 如果不这样做会添加在此loader之后
+    svgRule.exclude.add(/node_modules/); // 正则匹配排除node_modules目录
     svgRule // 添加svg新的loader处理
       .test(/\.svg$/)
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')
       .options({
         symbolId: 'icon-[name]'
-      })
+      });
 
     // 修改images loader 添加svg处理
-    const imagesRule = config.module.rule('images')
-    imagesRule.exclude.add(path.resolve('src/assets/icons'))
+    const imagesRule = config.module.rule('images');
+    imagesRule.exclude.add(path.resolve('src/assets/icons'));
     // #endregion svg-config
 
     if (process.env.NODE_ENV === 'production') {
@@ -49,7 +49,7 @@ module.exports = {
         .options({
           bypassOnDebug: true
         })
-        .end()
+        .end();
       // #endregion
 
       // #region 启用GZip压缩
@@ -63,7 +63,7 @@ module.exports = {
           minRatio: 0.8,
           cache: true
         })
-        .tap(args => {})
+        .tap(args => {});
 
       // #endregion
 
@@ -73,8 +73,8 @@ module.exports = {
         axios: 'axios',
         'vue-router': 'VueRouter',
         vuex: 'Vuex'
-      }
-      config.externals(externals)
+      };
+      config.externals(externals);
       const cdn = {
         css: [],
         js: [
@@ -87,28 +87,28 @@ module.exports = {
           // axios
           'https://static.myun.info/axios-0.18.0/axios.min.js'
         ]
-      }
+      };
       config.plugin('html')
         .tap(args => {
-          args[0].cdn = cdn
-          return args
-        })
+          args[0].cdn = cdn;
+          return args;
+        });
       // #endregion
 
       // #region 分析打包体积
       if (process.env.IS_ANALYZE) {
         config.plugin('webpack-report').use(BundleAnalyzerPlugin, [{
           analyzerMode: 'static'
-        }])
+        }]);
       }
       // #endregion 分析打包体积
     }
   },
   devServer: {
     port: 8080, // 端口号
-    host: 'localhost',
+    // host: 'localhost',
     https: false, // https:{type:Boolean}
     open: true // 配置自动启动浏览器
     // proxy: 'http://localhost:4000' // 配置跨域处理,只有一个代理
   }
-}
+};
