@@ -127,3 +127,10 @@ export default [
   }
 ]
 ```
+
+#### 设置bizcompanycode和companycode
+```
+// 在api/index.js中修改以下代码
+service.defaults.headers.post['bizcompanycode'] = 29028;
+service.defaults.headers.post['companycode'] = 29028;
+```
