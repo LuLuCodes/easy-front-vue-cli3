@@ -6,9 +6,7 @@ const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API
 });
 service.defaults.headers.post['Content-Type'] = 'application/json';
-// 设置bizcompanycode和companycode
-service.defaults.headers.post['bizcompanycode'] = 29028;
-service.defaults.headers.post['companycode'] = 29028;
+
 /**
  * 请求前拦截
  * 用于处理需要在请求前的操作
