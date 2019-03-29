@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import router from '../router'
+// import router from '../router';
 const service = axios.create({
   // 设置超时时间
   timeout: 6000,
@@ -62,6 +62,9 @@ service.interceptors.response.use(response => {
     // 401：未登录
     case 401:
       // 跳转登录页
+      // router.push({
+      //   replace: '/login'
+      // });
       break;
       // 403: token过期
     case 403:
