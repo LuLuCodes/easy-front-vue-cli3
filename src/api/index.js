@@ -3,7 +3,8 @@ import axios from 'axios';
 const service = axios.create({
   // 设置超时时间
   timeout: 6000,
-  baseURL: process.env.VUE_APP_BASE_API
+  baseURL: process.env.VUE_APP_BASE_API,
+  withCredentials: true
 });
 service.defaults.headers.post['Content-Type'] = 'application/json';
 
