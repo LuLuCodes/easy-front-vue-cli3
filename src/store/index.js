@@ -21,20 +21,23 @@ export default new Vuex.Store({
     }) {
       try {
         let res = await api.post(url, data);
-        let resData = res.data;
-        if (resData.IsSuccess) {
-          if (Array.isArray(resData.Data)) {
-            return {
-              List: resData.Data,
-              Paging: resData.Paging
-            };
-          } else if (resData.Paging) {
-            return {
-              ...resData.Data,
-              Paging: resData.Paging
-            };
+        if (res) {
+          if (res.IsSuccess) {
+            if (Array.isArray(res.Data)) {
+              return {
+                List: res.Data,
+                Paging: res.Paging
+              };
+            } else if (res.Paging) {
+              return {
+                ...res.Data,
+                Paging: res.Paging
+              };
+            } else {
+              return res.Data;
+            }
           } else {
-            return resData.Data;
+            throw new Error(res.ErrorMsg);
           }
         }
       } catch (error) {
