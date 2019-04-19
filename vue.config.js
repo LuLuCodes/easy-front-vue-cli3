@@ -40,7 +40,7 @@ module.exports = {
     imagesRule.exclude.add(path.resolve('src/assets/icons'));
     // #endregion svg-config
 
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV !== 'development') {
       // #region 图片压缩
       config.module
         .rule('images')
