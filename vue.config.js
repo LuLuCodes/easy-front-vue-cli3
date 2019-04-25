@@ -3,6 +3,11 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
+
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
+
 module.exports = {
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
@@ -23,6 +28,13 @@ module.exports = {
     }
   },
   chainWebpack: config => {
+    config.resolve.alias
+      .set('assets', resolve('src/assets'))
+      .set('api', resolve('src/api'))
+      .set('components', resolve('src/components'))
+      .set('views', resolve('src/views'));
+
+    config.output.filename('[name].[hash].js').end();
     // #region svg-config
     const svgRule = config.module.rule('svg'); // 找到svg-loader
     svgRule.uses.clear(); // 清除已有的loader, 如果不这样做会添加在此loader之后
@@ -88,18 +100,19 @@ module.exports = {
           'https://static.myun.info/axios-0.18.0/axios.min.js'
         ]
       };
-      config.plugin('html')
-        .tap(args => {
-          args[0].cdn = cdn;
-          return args;
-        });
+      config.plugin('html').tap(args => {
+        args[0].cdn = cdn;
+        return args;
+      });
       // #endregion
 
       // #region 分析打包体积
       if (process.env.IS_ANALYZE) {
-        config.plugin('webpack-report').use(BundleAnalyzerPlugin, [{
-          analyzerMode: 'static'
-        }]);
+        config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
+          {
+            analyzerMode: 'static'
+          }
+        ]);
       }
       // #endregion 分析打包体积
     }
