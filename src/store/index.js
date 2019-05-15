@@ -28,6 +28,8 @@ export default new Vuex.Store({
                 List: res.Data,
                 Paging: res.Paging
               };
+            } else if (typeof res.Data === 'string') {
+              return res.Data;
             } else if (res.Paging) {
               return {
                 ...res.Data,
