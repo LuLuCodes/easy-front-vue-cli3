@@ -14,8 +14,8 @@ module.exports = {
       config.plugins.push(
         new UglifyJsPlugin({
           uglifyOptions: {
+            warnings: false,
             compress: {
-              warnings: false,
               drop_debugger: true, // console
               drop_console: true,
               pure_funcs: ['console.log'] // 移除console
