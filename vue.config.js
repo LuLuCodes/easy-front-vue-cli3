@@ -91,13 +91,13 @@ module.exports = {
         css: [],
         js: [
           // vue
-          'https://static.myun.info/vue-2.6.10/vue.min.js',
+          'https://cdn.myun.info/vue-2.6.10/vue.min.js',
           // vue-router
-          'https://static.myun.info/vue-router-3.0.2/vue-router.min.js',
+          'https://cdn.myun.info/vue-router-3.0.2/vue-router.min.js',
           // vuex
-          'https://static.myun.info/vuex-3.1.0/vuex.min.js',
+          'https://cdn.myun.info/vuex-3.1.0/vuex.min.js',
           // axios
-          'https://static.myun.info/axios-0.18.0/axios.min.js'
+          'https://cdn.myun.info/axios-0.18.0/axios.min.js'
         ]
       };
       config.plugin('html').tap(args => {
