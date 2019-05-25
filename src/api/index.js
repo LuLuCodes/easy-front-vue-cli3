@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import router from '../router';
+import router from '../router';
 const service = axios.create({
   // 设置超时时间
   timeout: 6000,
@@ -16,10 +16,10 @@ service.interceptors.request.use(config => {
   // 可以在请求先展示加载框
 
   // 请求头带token
-  /* const token = localStorage.getItem('token')
-  if (token) {
-    config.headers['Authorization'] = token
-  } */
+  const authToken = window.localStorage.getItem('authToken');
+  if (authToken) {
+    config.headers['Authorization'] = `Bearer ${authToken}`;
+  }
   return config;
 }, (error) => {
   return Promise.reject(error);
@@ -35,6 +35,9 @@ service.interceptors.response.use(response => {
   // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
   // 否则的话抛出错误
   if (responseCode === 200) {
+    if (response.data.Data || response.data.token) {
+      window.localStorage.setItem('authToken', response.data.Data.authToken);
+    }
     return Promise.resolve(response.data);
   } else {
     return Promise.reject(response);
@@ -60,18 +63,24 @@ service.interceptors.response.use(response => {
   const responseCode = error.response.status;
 
   switch (responseCode) {
-    // 401：未登录
-    case 401:
+    case 401: // 401：未登录
       // 跳转登录页
-      // router.push({
-      //   replace: '/login'
-      // });
+      router.push({
+        replace: '/login'
+      });
       break;
-      // 403: token过期
-    case 403:
+    case 403: // 403: token过期
       // 弹出错误信息
-      // 清除token
+      window.localStorage.removeItem('authToken');
       // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
+      setTimeout(() => {
+        router.replace({
+          path: '/login',
+          query: {
+            redirect: router.currentRoute.fullPath
+          }
+        });
+      }, 1000);
       break;
       // 404请求不存在
     case 404:
