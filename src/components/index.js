@@ -1,15 +1,26 @@
 // 自动加载 global 目录下的 .js 结尾的文件
 
 import Vue from 'vue';
+import _ from 'lodash';
 
-const componentsContext = require.context('./global', true, /\.js$/);
+const requireComponent = require.context('./global', true, /[\w-]+\.(vue|js)$/);
 
-componentsContext.keys().forEach(component => {
-  const componentConfig = componentsContext(component);
+requireComponent.keys().forEach(fileName => {
+  const componentConfig = requireComponent(fileName);
+  // Get the PascalCase version of the component name
+  const componentName = _.upperFirst(
+    _.camelCase(
+      fileName
+        // Remove the "./_" from the beginning
+        .replace(/^\.\/_/, '')
+        // Remove the file extension from the end
+        .replace(/\.\w+$/, '')
+    )
+  );
   /**
   * 兼容 import export 和 require module.export 两种规范
   */
-  const ctrl = componentConfig.default || componentConfig;
-  console.log('ctrl.name', ctrl.name);
-  Vue.component(ctrl.name, ctrl);
+  // Globally register the component
+  console.log('component name: ', componentName);
+  Vue.component(componentName, componentConfig.default || componentConfig);
 });

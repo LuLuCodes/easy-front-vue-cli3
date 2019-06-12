@@ -26,7 +26,7 @@ yarn install
 ### 调试模式
 
 ```
-yarn run serve
+yarn run dev
 ```
 
 ### 打包生产环境
