@@ -49,11 +49,13 @@ service.interceptors.response.use(response => {
   if (!error.response) {
     // 请求超时状态
     if (error.message.includes('timeout')) {
-      console.log('亲，网络不给力啊悲剧(＞﹏＜)');
+      // console.log('亲，网络不给力啊悲剧(＞﹏＜)');
+      return Promise.reject('亲，网络不给力啊悲剧(＞﹏＜)');
       // 消息提示框
     } else {
       // 可以展示断网组件
-      console.log('亲，网络似乎出了点问题ㄟ( ▔, ▔ )ㄏ');
+      return Promise.reject('亲，网络似乎出了点问题ㄟ( ▔, ▔ )ㄏ');
+      // console.log('亲，网络似乎出了点问题ㄟ( ▔, ▔ )ㄏ');
       // 消息提示框
     }
     return;
