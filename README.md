@@ -128,3 +128,22 @@ export default [
 ]
 ```
 
+### 数据通讯签名机制
+前端请求数据时，对post请求中数据进行MD5签名并对签名进行RSA加密
+
+#### 是否启用数据签名
+在.env*环境配置文件中，增加`VUE_APP_ENABLE_SIGN = "1"`
+
+#### 设置公钥
+1、公钥如何产生，请查看[easy-front-express-api](https://github.com/LuLuCodes/easy-front-express-api)
+
+2、请在src/store/index.js中设置公钥
+```
+// 设置公钥
+const pem = `-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCoVF1Z6CSMKdNPtdkuNQWCIYiZ
+ZTvjEuEOAEPo0z2rz6A/m6byE8B84V69f+xtNg9s1QtZ0jLW3Lvumps1GmLSXwCX
+rJOcKm+3jmB3+KecXTguJMJHEkxvLYUKk270ennfSq7uQZ9P9iIEDgHHaQMJd/I5
+M6E1RulpjXQt5cpzUQIDAQAB
+-----END PUBLIC KEY-----`;
+```

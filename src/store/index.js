@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 import md5 from 'crypto-js/md5';
 import api from '../api';
 
+// 设置公钥
 const pem = `-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCoVF1Z6CSMKdNPtdkuNQWCIYiZ
 ZTvjEuEOAEPo0z2rz6A/m6byE8B84V69f+xtNg9s1QtZ0jLW3Lvumps1GmLSXwCX
