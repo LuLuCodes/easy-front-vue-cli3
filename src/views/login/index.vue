@@ -12,13 +12,32 @@ export default {
   },
   computed: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.init();
+  },
   watch: {},
-  methods: {}
+  methods: {
+    async init() {
+      await this.$store.dispatch('postData', {
+        url: '/login',
+        data: {
+          Extra: {
+            IndustryClassSysNoList: [1018804],
+            Limit: { IsShowFileThumbnailUrlList: 1, IsShowSkuInventory: 1 }
+          },
+          Filters: [
+            { DataType: 'LJProductGroup', Except: ['ProductGroupDetail'] }
+          ],
+          Sorts: [{ SortName: 'SortNo', SortType: 'ASC' }],
+          PageIndex: 0,
+          PageSize: 0
+        }
+      });
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
 .login.vue {
-
 }
 </style>

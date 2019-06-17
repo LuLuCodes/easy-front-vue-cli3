@@ -19,13 +19,16 @@ export default new Vuex.Store({
   mutations: {},
   actions: {
     async postData({ commit, rootState }, { url, data }) {
+      console.log(`typeof data: ${typeof data}`);
+      console.log(`process.env.VUE_APP_ENABLE_SIGN: ${process.env.VUE_APP_ENABLE_SIGN}`);
       try {
-        if (typeof data === 'object' && process.env.ENABLE_SIGN) {
-          data.Sign = md5(JSON.stringify(data));
+        if (typeof data === 'object' && process.env.VUE_APP_ENABLE_SIGN) {
+          let sign = md5(JSON.stringify(data));
           // Encrypt with the public key...
           let encrypt = new window.JSEncrypt();
           encrypt.setPublicKey(pem);
-          data.Sign = encrypt.encrypt(data.Sign.toUpperCase());
+          data.S = encrypt.encrypt(sign.toString().toUpperCase());
+          console.log(`data.Sign: ${data.S}`);
         }
         let res = await api.post(url, data);
         if (res) {
