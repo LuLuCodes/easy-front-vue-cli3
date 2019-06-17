@@ -19,8 +19,6 @@ export default new Vuex.Store({
   mutations: {},
   actions: {
     async postData({ commit, rootState }, { url, data }) {
-      console.log(`typeof data: ${typeof data}`);
-      console.log(`process.env.VUE_APP_ENABLE_SIGN: ${process.env.VUE_APP_ENABLE_SIGN}`);
       try {
         if (typeof data === 'object' && process.env.VUE_APP_ENABLE_SIGN) {
           let sign = md5(JSON.stringify(data));
