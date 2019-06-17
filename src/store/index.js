@@ -26,7 +26,6 @@ export default new Vuex.Store({
           let encrypt = new window.JSEncrypt();
           encrypt.setPublicKey(pem);
           data.S = encrypt.encrypt(sign.toString().toUpperCase());
-          console.log(`data.Sign: ${data.S}`);
         }
         let res = await api.post(url, data);
         if (res) {
