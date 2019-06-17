@@ -36,30 +36,37 @@ module.exports = {
 
     config.output.filename('[name].[hash].js').end();
     // #region svg-config
-    // config.module.rules.delete('svg'); // 删除默认配置中处理svg,
-    // config.module
-    //   .rule('svg-sprite-loader')
-    //   .test(/\.svg$/)
-    //   .include
-    //   .add(resolve('src/icons')) // 处理svg目录
-    //   .end()
-    //   .use('svg-sprite-loader')
-    //   .loader('svg-sprite-loader')
-    //   .options({
-    //     symbolId: 'icon-[name]'
-    //   });
+    const svgRule = config.module.rule('svg'); // 找到svg-loader
+    svgRule.uses.clear(); // 清除已有的loader, 如果不这样做会添加在此loader之后
+    svgRule.exclude.add(/node_modules/); // 正则匹配排除node_modules目录
+    svgRule // 添加svg新的loader处理
+      .test(/\.svg$/)
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      });
+
+    // 修改images loader 添加svg处理
+    const imagesRule = config.module.rule('images');
+    imagesRule.exclude.add(path.resolve('src/assets/icons'));
     // #endregion svg-config
+
 
     if (process.env.NODE_ENV !== 'development') {
       // #region 图片压缩
       config.module
         .rule('images')
-        .use('image-webpack-loader')
-        .loader('image-webpack-loader')
-        .options({
-          bypassOnDebug: true
-        })
-        .end();
+        .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
+        .use('img-loader')
+        .loader('img-loader').options({
+          plugins: [
+            require('imagemin-jpegtran')(),
+            require('imagemin-pngquant')({
+              quality: [0.75, 0.85]
+            })
+          ]
+        });
       // #endregion
 
       // #region 启用GZip压缩

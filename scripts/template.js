@@ -18,7 +18,7 @@ export default {
   mounted() {},
   watch: {},
   methods: {}
-}
+};
 </script>
 <style lang="less" scoped>
 .${componentName} {

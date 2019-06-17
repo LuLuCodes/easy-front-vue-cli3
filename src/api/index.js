@@ -50,15 +50,14 @@ service.interceptors.response.use(response => {
     // 请求超时状态
     if (error.message.includes('timeout')) {
       // console.log('亲，网络不给力啊悲剧(＞﹏＜)');
-      return Promise.reject('亲，网络不给力啊悲剧(＞﹏＜)');
+      return Promise.reject(new Error('亲，网络不给力啊悲剧(＞﹏＜)'));
       // 消息提示框
     } else {
       // 可以展示断网组件
-      return Promise.reject('亲，网络似乎出了点问题ㄟ( ▔, ▔ )ㄏ');
+      return Promise.reject(new Error('亲，网络似乎出了点问题ㄟ( ▔, ▔ )ㄏ'));
       // console.log('亲，网络似乎出了点问题ㄟ( ▔, ▔ )ㄏ');
       // 消息提示框
     }
-    return;
   }
   // 服务器返回不是 2 开头的情况，会进入这个回调
   // 可以根据后端返回的状态码进行不同的操作

@@ -93,8 +93,8 @@ const cdn = {
 
 ### 新建页面或组件
 ```
-yarn run new:view // 新建页面
-yarn run new:comp // 新建组件
+yarn run new:view // 新建页面，支持单个vue文件如home.vue，或者目录如home/index.vue
+yarn run new:comp // 新建组件，支持单个vue文件如my-button.vue，或者目录如my-button/index.vue
 ```
 
 ### 动态加载路由

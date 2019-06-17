@@ -1,25 +1,32 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
+import md5 from 'crypto-js/md5';
 import api from '../api';
+
+const pem = `-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCoVF1Z6CSMKdNPtdkuNQWCIYiZ
+ZTvjEuEOAEPo0z2rz6A/m6byE8B84V69f+xtNg9s1QtZ0jLW3Lvumps1GmLSXwCX
+rJOcKm+3jmB3+KecXTguJMJHEkxvLYUKk270ennfSq7uQZ9P9iIEDgHHaQMJd/I5
+M6E1RulpjXQt5cpzUQIDAQAB
+-----END PUBLIC KEY-----`;
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {},
   modules: {},
-  mutations: {
-
-  },
+  mutations: {},
   actions: {
-    async postData({
-      commit,
-      rootState
-    }, {
-      url,
-      data
-    }) {
+    async postData({ commit, rootState }, { url, data }) {
       try {
+        if (typeof data === 'object' && process.env.ENABLE_SIGN) {
+          data.Sign = md5(JSON.stringify(data));
+          // Encrypt with the public key...
+          let encrypt = new window.JSEncrypt();
+          encrypt.setPublicKey(pem);
+          data.Sign = encrypt.encrypt(data.Sign.toUpperCase());
+        }
         let res = await api.post(url, data);
         if (res) {
           if (res.IsSuccess) {
@@ -47,7 +54,9 @@ export default new Vuex.Store({
       }
     }
   },
-  plugins: [createPersistedState({
-    storage: window.sessionStorage
-  })]
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage
+    })
+  ]
 });
