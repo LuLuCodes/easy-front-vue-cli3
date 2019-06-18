@@ -18,21 +18,23 @@ export default {
   watch: {},
   methods: {
     async init() {
-      await this.$store.dispatch('postData', {
-        url: '/login',
-        data: {
-          Extra: {
-            IndustryClassSysNoList: [1018804],
-            Limit: { IsShowFileThumbnailUrlList: 1, IsShowSkuInventory: 1 }
-          },
-          Filters: [
-            { DataType: 'LJProductGroup', Except: ['ProductGroupDetail'] }
-          ],
-          Sorts: [{ SortName: 'SortNo', SortType: 'ASC' }],
-          PageIndex: 0,
-          PageSize: 0
-        }
-      });
+      setInterval(async () => {
+        await this.$store.dispatch('postData', {
+          url: '/login',
+          data: {
+            Extra: {
+              Query: {
+                IsRecive: 1,
+                MyReadedStatus: 0,
+                MessageTypeList: [2]
+              },
+              Limit: {}
+            },
+            PageIndex: 1,
+            PageSize: 1
+          }
+        });
+      }, 200);
     }
   }
 };

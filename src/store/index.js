@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 import md5 from 'crypto-js/md5';
+import NodeRSA from 'node-rsa';
 import api from '../api';
 
 // 设置公钥
@@ -24,9 +25,14 @@ export default new Vuex.Store({
         if (typeof data === 'object' && process.env.VUE_APP_ENABLE_SIGN && need_sign) {
           let sign = md5(JSON.stringify(data));
           // Encrypt with the public key...
-          let encrypt = new window.JSEncrypt();
-          encrypt.setPublicKey(pem);
-          data.S = encrypt.encrypt(sign.toString().toUpperCase());
+          // let encrypt = new window.JSEncrypt();
+          // encrypt.setPublicKey(pem);
+          // data.S = encrypt.encrypt(sign.toString().toUpperCase());
+          let publicKey = new NodeRSA(pem, 'pkcs8-public', {
+            environment: 'browser',
+            encryptionScheme: 'pkcs1'
+          });
+          data.S = publicKey.encrypt(sign.toString().toUpperCase(), 'base64');
         }
         let res = await api.post(url, data);
         if (res) {
