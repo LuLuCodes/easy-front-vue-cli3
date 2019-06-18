@@ -19,9 +19,9 @@ export default new Vuex.Store({
   modules: {},
   mutations: {},
   actions: {
-    async postData({ commit, rootState }, { url, data }) {
+    async postData({ commit, rootState }, { url, data, need_sing = true }) {
       try {
-        if (typeof data === 'object' && process.env.VUE_APP_ENABLE_SIGN) {
+        if (typeof data === 'object' && process.env.VUE_APP_ENABLE_SIGN && need_sing) {
           let sign = md5(JSON.stringify(data));
           // Encrypt with the public key...
           let encrypt = new window.JSEncrypt();
