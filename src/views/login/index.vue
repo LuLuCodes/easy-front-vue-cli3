@@ -34,7 +34,7 @@ export default {
             PageSize: 1
           }
         });
-      }, 200);
+      }, 50);
     }
   }
 };
