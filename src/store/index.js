@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 import md5 from 'crypto-js/md5';
-import CryptoJS from 'crypto-js';
+import aes from 'crypto-js/aes';
 // import NodeRSA from 'node-rsa';
 import api from '../api';
 
@@ -18,7 +18,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    iv: 'iv-test'
   },
   modules: {},
   mutations: {},
@@ -41,7 +40,7 @@ export default new Vuex.Store({
           //   encryptionScheme: 'pkcs1'
           // });
           // data.S = publicKey.encrypt(sign.toString().toUpperCase(), 'base64');
-          data.S = CryptoJS.AES.encrypt(sign.toString().toUpperCase(), rootState.iv).toString();
+          data.S = aes.encrypt(sign.toString().toUpperCase(), url).toString();
           console.log('data.S: ', data.S);
         }
         let res = await api.post(url, data);
