@@ -1,6 +1,7 @@
 {
   "name": "easy-front-vue-cli3",
   "version": "0.1.0",
+  "description": "easy-front-vue-cli3",
   "private": true,
   "scripts": {
     "new:view": "node ./scripts/view-generator",
