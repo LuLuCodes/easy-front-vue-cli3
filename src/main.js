@@ -8,8 +8,11 @@ import './components';
 
 Vue.config.productionTip = false;
 
-router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token');
+router.beforeEach(async (to, from, next) => {
+  let token = await store.dispatch('postData', {
+    url: '/user/get-auth-token',
+    data: {}
+  });
   if (to.path !== '/login' && !token) {
     return next('/login');
   } else if (to.path === '/login' && token) {
