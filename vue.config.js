@@ -57,16 +57,12 @@ module.exports = {
       // #region 图片压缩
       config.module
         .rule('images')
-        .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
-        .use('img-loader')
-        .loader('img-loader').options({
-          plugins: [
-            require('imagemin-jpegtran')(),
-            require('imagemin-pngquant')({
-              quality: [0.75, 0.85]
-            })
-          ]
-        });
+        .use('image-webpack-loader')
+        .loader('image-webpack-loader')
+        .options({
+          bypassOnDebug: true
+        })
+        .end();
       // #endregion
 
       // #region 启用GZip压缩
