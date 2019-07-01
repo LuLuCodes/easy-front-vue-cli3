@@ -13,6 +13,14 @@ export default {
   data() {
     return {};
   },
+  props: {
+    prop: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
+  },
   computed: {},
   created() {},
   mounted() {},
