@@ -35,6 +35,6 @@ export default {
 </style>
 `;
   },
-  entryTemplate: `import Main from './main.vue'
-export default Main`
+  entryTemplate: `import Main from './main.vue';
+export default Main`;
 };
