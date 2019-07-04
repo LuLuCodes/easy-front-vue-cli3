@@ -216,6 +216,23 @@ export default new Router({
 });
 ```
 
+```
+// 路由设置
+// keepAlive设置页面是否需要keep
+// deepth设置页面深度，用于判断前进和后腿
+export default [
+  {
+    path: '/home',
+    name: 'home',
+    component: () => import('@/views/home'),
+    meta: {
+        deepth: 1,
+        keepAlive: true // 需要被缓存
+    }
+  }
+];
+```
+
 ### 数据通讯签名机制
 前端请求数据时，对post请求中数据进行MD5签名并对签名进行RSA加密
 
