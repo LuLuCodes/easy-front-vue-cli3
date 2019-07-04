@@ -128,6 +128,94 @@ export default [
 ]
 ```
 
+#### 路由动态keep-alive
+```
+// App.vue增加include
+
+<template>
+  <div id="app">
+    <keep-alive :include="include">
+      <!-- 需要缓存的视图组件 -->
+      <router-view v-if="$route.meta.keepAlive">
+      </router-view>
+    </keep-alive>
+
+    <router-view v-if="!$route.meta.keepAlive">
+    </router-view>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'App',
+  components: {},
+  data() {
+    return {
+      include: []
+    };
+  },
+  computed: {},
+  created() {},
+  mounted() {
+  },
+  watch: {
+    $route(to, from) {
+      // 如果 要 to(进入) 的页面是需要 keepAlive 缓存的，把 name push 进 include数组
+      if (to.meta.keepAlive) {
+        !this.include.includes(to.name) && this.include.push(to.name);
+      }
+      // 如果 要 form(离开) 的页面是 keepAlive缓存的，
+      // 再根据 deepth 来判断是前进还是后退
+      if (from.meta.keepAlive && to.meta.deepth < from.meta.deepth) {
+        var index = this.include.indexOf(from.name);
+        index !== -1 && this.include.splice(index, 1);
+      }
+      this.$store.commit('updateKeepAliveInclude', this.include);
+    }
+  },
+  methods: {
+  }
+};
+</script>
+
+<style lang="less">
+</style>
+
+```
+
+```
+// 利用store存储分发include
+  state: {
+    keepAliveInclude: []
+  },
+  modules: {},
+  mutations: {
+    updateKeepAliveInclude: (state, data) => {
+      state.keepAliveInclude = data;
+    }
+  }
+```
+
+```
+// 利用vue router的scrollBehavior缓存滚动位置信息
+export default new Router({
+  mode: 'history',
+  routes: routes,
+  scrollBehavior(to, from, savedPosition) {
+    // keep-alive 返回缓存页面后记录浏览位置
+    if (savedPosition && to.meta.keepAlive && store.state.keepAliveInclude.includes(to.name)) {
+     return savedPosition;
+    }
+    // 异步滚动操作
+    return new Promise((resolve) => {
+     setTimeout(() => {
+      resolve({ x: 0, y: 1 });
+     }, 0);
+    });
+   }
+});
+```
+
 ### 数据通讯签名机制
 前端请求数据时，对post请求中数据进行MD5签名并对签名进行RSA加密
 

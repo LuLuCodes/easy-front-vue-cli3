@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from '../store';
 Vue.use(Router);
 
 let routes = [];
@@ -18,6 +19,18 @@ routerContext.keys().forEach(route => {
 });
 
 export default new Router({
-  mode: 'hash',
-  routes: routes
+  mode: 'history',
+  routes: routes,
+  scrollBehavior(to, from, savedPosition) {
+    // keep-alive 返回缓存页面后记录浏览位置
+    if (savedPosition && to.meta.keepAlive && store.state.keepAliveInclude.includes(to.name)) {
+     return savedPosition;
+    }
+    // 异步滚动操作
+    return new Promise((resolve) => {
+     setTimeout(() => {
+      resolve({ x: 0, y: 1 });
+     }, 0);
+    });
+   }
 });

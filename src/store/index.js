@@ -18,9 +18,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    keepAliveInclude: []
   },
   modules: {},
-  mutations: {},
+  mutations: {
+    updateKeepAliveInclude: (state, data) => {
+      state.keepAliveInclude = data;
+    }
+  },
   actions: {
     async postData({ commit, rootState }, { url, data, need_sign = true }) {
       try {
@@ -41,7 +46,6 @@ export default new Vuex.Store({
           // });
           // data.S = publicKey.encrypt(sign.toString().toUpperCase(), 'base64');
           data.S = aes.encrypt(sign.toString().toUpperCase(), url).toString();
-          console.log('data.S: ', data.S);
         }
         let res = await api.post(url, data);
         if (res) {
