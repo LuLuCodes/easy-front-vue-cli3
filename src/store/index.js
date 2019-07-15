@@ -24,6 +24,9 @@ export default new Vuex.Store({
   mutations: {
     updateKeepAliveInclude: (state, data) => {
       state.keepAliveInclude = data;
+    },
+    clearKeepAliveInclude: (state) => {
+      state.keepAliveInclude = [];
     }
   },
   actions: {
