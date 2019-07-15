@@ -28,7 +28,7 @@ export default {
     $route(to, from) {
       // 如果 要 to(进入) 的页面是需要 keepAlive 缓存的，把 name push 进 include数组
       if (to.meta.keepAlive) {
-        !this.include.includes(to.name) && this.include.push(to.name);
+        this.include.indexOf(to.name) === -1 && this.include.push(to.name);
       }
       // 如果 要 form(离开) 的页面是 keepAlive缓存的，
       // 再根据 deepth 来判断是前进还是后退
