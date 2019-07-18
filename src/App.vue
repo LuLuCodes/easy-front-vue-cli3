@@ -32,7 +32,7 @@ export default {
       }
       // 如果 要 form(离开) 的页面是 keepAlive缓存的，
       // 再根据 deepth 来判断是前进还是后退
-      if (from.meta.keepAlive && to.meta.deepth < from.meta.deepth) {
+      if (from.meta.keepAlive && to.meta.deepth <= from.meta.deepth) {
         var index = this.include.indexOf(from.name);
         index !== -1 && this.include.splice(index, 1);
       }
