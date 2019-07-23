@@ -1,6 +1,6 @@
 // vue.config.js
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
+  CompressionPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 
@@ -51,7 +51,6 @@ module.exports = {
     // const imagesRule = config.module.rule('images');
     // imagesRule.exclude.add(path.resolve('src/assets/icons'));
     // #endregion svg-config
-
 
     if (process.env.NODE_ENV !== 'development') {
       // #region 图片压缩

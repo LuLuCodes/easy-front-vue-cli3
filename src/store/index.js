@@ -30,10 +30,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async postData({ commit, rootState }, { url, data, need_sign = true }) {
+    async postData({commit, rootState}, {url, data, needSign = true}) {
       try {
-        if (typeof data === 'object' && process.env.VUE_APP_ENABLE_SIGN && need_sign) {
-          let sign = md5(JSON.stringify(data));
+        if (typeof data === 'object' && process.env.VUE_APP_ENABLE_SIGN && needSign) {
+          const sign = md5(JSON.stringify(data));
           // JSEncrypt...
           // let encrypt = new window.JSEncrypt();
           // encrypt.setPublicKey(pem);
@@ -50,7 +50,7 @@ export default new Vuex.Store({
           // data.S = publicKey.encrypt(sign.toString().toUpperCase(), 'base64');
           data.S = aes.encrypt(sign.toString().toUpperCase(), url).toString();
         }
-        let res = await api.post(url, data);
+        const res = await api.post(url, data);
         if (res) {
           if (res.IsSuccess) {
             if (Array.isArray(res.Data)) {

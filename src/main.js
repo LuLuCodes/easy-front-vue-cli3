@@ -8,8 +8,8 @@ import './components';
 
 Vue.config.productionTip = false;
 
-router.beforeEach(async (to, from, next) => {
-  let token = await store.dispatch('postData', {
+router.beforeEach(async(to, from, next) => {
+  const token = await store.dispatch('postData', {
     url: '/user/get-auth-token',
     data: {}
   });

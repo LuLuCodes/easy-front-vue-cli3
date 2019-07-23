@@ -24,13 +24,13 @@ export default new Router({
   scrollBehavior(to, from, savedPosition) {
     // keep-alive 返回缓存页面后记录浏览位置
     if (savedPosition && to.meta.keepAlive && store.state.keepAliveInclude.includes(to.name)) {
-     return savedPosition;
+      return savedPosition;
     }
     // 异步滚动操作
     return new Promise((resolve) => {
-     setTimeout(() => {
-      resolve({ x: 0, y: 1 });
-     }, 0);
+      setTimeout(() => {
+        resolve({x: 0, y: 1});
+      }, 0);
     });
-   }
+  }
 });

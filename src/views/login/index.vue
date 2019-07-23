@@ -11,14 +11,13 @@ export default {
     return {};
   },
   computed: {},
-  created() {},
   mounted() {
     this.init();
   },
   watch: {},
   methods: {
     async init() {
-      setInterval(async () => {
+      setInterval(async() => {
         await this.$store.dispatch('postData', {
           url: '/login',
           data: {

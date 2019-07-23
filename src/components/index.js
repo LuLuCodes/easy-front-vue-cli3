@@ -6,17 +6,17 @@ import _ from 'lodash';
 const requireComponent = require.context('./global', true, /[\w-]+\.(vue|js)$/);
 
 requireComponent.keys().forEach(fileName => {
-  const componentConfig = requireComponent(fileName);
-  // Get the PascalCase version of the component name
-  const componentName = _.upperFirst(
-    _.camelCase(
-      fileName
+  const componentConfig = requireComponent(fileName),
+    // Get the PascalCase version of the component name
+    componentName = _.upperFirst(
+      _.camelCase(
+        fileName
         // Remove the "./_" from the beginning
-        .replace(/^\.\/_/, '')
+          .replace(/^\.\/_/, '')
         // Remove the file extension from the end
-        .replace(/\.\w+$/, '')
-    )
-  );
+          .replace(/\.\w+$/, '')
+      )
+    );
   /**
   * 兼容 import export 和 require module.export 两种规范
   */

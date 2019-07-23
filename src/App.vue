@@ -21,8 +21,8 @@ export default {
     };
   },
   computed: {},
-  created() {},
-  mounted() {
+  beforeDestroy() {
+    this.$store.commit('updateKeepAliveInclude', []);
   },
   watch: {
     $route(to, from) {
@@ -39,8 +39,7 @@ export default {
       this.$store.commit('updateKeepAliveInclude', this.include);
     }
   },
-  methods: {
-  }
+  methods: {}
 };
 </script>
 
