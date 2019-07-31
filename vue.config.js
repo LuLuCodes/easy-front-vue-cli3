@@ -28,6 +28,11 @@ module.exports = {
     }
   },
   chainWebpack: config => {
+    // #region 关闭预加载
+    // config.plugins.delete('prefetch');
+    // config.plugins.delete('preload');
+    // #endregion 关闭预加载
+
     config.resolve.alias
       .set('assets', resolve('src/assets'))
       .set('api', resolve('src/api'))
