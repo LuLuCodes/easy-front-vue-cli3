@@ -9,7 +9,6 @@
   <% if (process.env.NODE_ENV !== 'development') { %>
 
   <% for(var css of htmlWebpackPlugin.options.cdn.css) { %>
-  <link href="<%=css%>" rel="preload" as="style">
   <link rel="stylesheet" href="<%=css%>" as="style">
   <% } %>
   <% } %>
