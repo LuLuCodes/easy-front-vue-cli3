@@ -7,10 +7,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
   <% if (process.env.NODE_ENV !== 'development') { %>
-
-  <% for(var css of htmlWebpackPlugin.options.cdn.css) { %>
-  <link rel="stylesheet" href="<%=css%>" as="style">
-  <% } %>
+    <!-- 使用CDN的CSS文件 -->
+    <% for (var css of htmlWebpackPlugin.options.cdn.css) { %>
+      <link href="<%= css %>" rel="preload" as="style">
+      <link href="<%= css %>" rel="stylesheet">
+    <% } %>
+    <!-- 使用CDN的JS文件 -->
+    <% for (var js of htmlWebpackPlugin.options.cdn.js) { %>
+      <link href="<%= js %>" rel="preload" as="script">
+    <% } %>
   <% } %>
   <title>vue-cli3-project</title>
 </head>
@@ -22,9 +27,9 @@
   </noscript>
   <div id="app"></div>
   <% if (process.env.NODE_ENV !== 'development') { %>
-  <% for(var js of htmlWebpackPlugin.options.cdn.js) { %>
-  <script src="<%=js%>"></script>
-  <% } %>
+    <% for (var js of htmlWebpackPlugin.options.cdn.js) { %>
+      <script src="<%= js %>"></script>
+    <% } %>
   <% } %>
   <!-- built files will be auto injected -->
 </body>
