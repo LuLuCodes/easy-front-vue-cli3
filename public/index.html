@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta content="telephone=no" name="format-detection" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
   <% if (process.env.NODE_ENV !== 'development') { %>
 
@@ -12,13 +12,7 @@
   <link href="<%=css%>" rel="preload" as="style">
   <link rel="stylesheet" href="<%=css%>" as="style">
   <% } %>
-  <% for(var js of htmlWebpackPlugin.options.cdn.js) { %>
-  <link href="<%=js%>" rel="preload" as="script">
-  <script src="<%=js%>"></script>
   <% } %>
-  <% } %>
-  <link href="https://cdn.myun.info/jsencrypt.min.js" rel="preload" as="script">
-  <script src="https://cdn.myun.info/jsencrypt.min.js"></script>
   <title>vue-cli3-project</title>
 </head>
 
@@ -28,6 +22,11 @@
       continue.</strong>
   </noscript>
   <div id="app"></div>
+  <% if (process.env.NODE_ENV !== 'development') { %>
+  <% for(var js of htmlWebpackPlugin.options.cdn.js) { %>
+  <script src="<%=js%>"></script>
+  <% } %>
+  <% } %>
   <!-- built files will be auto injected -->
 </body>
 
