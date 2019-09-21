@@ -247,7 +247,7 @@ module.exports = {
     'one-var': [
       2,
       {
-        initialized: 'consecutive'
+        uninitialized: 'consecutive'
       }
     ],
     // 要求把换行符放在操作符后面
