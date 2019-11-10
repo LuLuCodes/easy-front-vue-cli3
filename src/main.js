@@ -8,19 +8,19 @@ import './components';
 
 Vue.config.productionTip = false;
 
-router.beforeEach(async(to, from, next) => {
-  const token = await store.dispatch('postData', {
-    url: '/user/get-auth-token',
-    data: {}
-  });
-  if (to.path !== '/login' && !token) {
-    return next('/login');
-  } else if (to.path === '/login' && token) {
-    return next('/home');
-  } else {
-    next();
-  }
-});
+// router.beforeEach(async(to, from, next) => {
+//   const token = await store.dispatch('postData', {
+//     url: '/user/get-auth-token',
+//     data: {}
+//   });
+//   if (to.path !== '/login' && !token) {
+//     return next('/login');
+//   } else if (to.path === '/login' && token) {
+//     return next('/home');
+//   } else {
+//     next();
+//   }
+// });
 
 new Vue({
   router,
