@@ -11,7 +11,8 @@
     "pre-release": "vue-cli-service build --mode pre-release",
     "test": "vue-cli-service build --mode test",
     "lint": "vue-cli-service lint",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:e2e": "vue-cli-service test:e2e",
+    "commit": "git cz"
   },
   "dependencies": {
     "autoprefixer": "^9.5.1",
@@ -34,7 +35,9 @@
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "chalk": "^2.4.2",
+    "commitizen": "^4.0.3",
     "compression-webpack-plugin": "^2.0.0",
+    "cz-customizable": "^6.2.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "image-webpack-loader": "^4.6.0",
@@ -55,5 +58,10 @@
       "vue-cli-service lint",
       "git add"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
   }
 }
