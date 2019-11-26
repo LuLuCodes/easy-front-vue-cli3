@@ -293,6 +293,9 @@ npm run commit
 # 选择提交类型
 ? Select the type of change that you're committing:
 
+# 本次提交的影响范围
+? Denote the SCOPE of this change:
+
 # 简单描述本次提交的内容
 ? Write a SHORT, IMPERATIVE tense description of the change:
 
