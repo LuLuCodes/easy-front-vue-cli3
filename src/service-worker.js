@@ -16,8 +16,8 @@ workbox.core.setCacheNameDetails({
   suffix: "v1.0.0"
 });
 // have our sw update and control a web page as soon as possible.
-// workbox.skipWaiting();
-// workbox.clientsClaim();
+workbox.skipWaiting();
+workbox.clientsClaim();
 
 // vue-cli3.0 supports pwa with the help of workbox-webpack-plugin, we need to get the precacheing list through this sentence.
 workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
