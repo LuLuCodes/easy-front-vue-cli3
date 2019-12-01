@@ -2,7 +2,7 @@
 
 import {register} from 'register-service-worker';
 
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'pre-release') {
+if ('serviceWorker' in window.navigator && (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'pre-release')) {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready() {
       console.log(
