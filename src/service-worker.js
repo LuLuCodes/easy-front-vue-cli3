@@ -1,9 +1,9 @@
 "use strict";
 
-// importScripts("https://cdn.myun.info/workbox-v4.3.1/workbox-sw.js");
-// workbox.setConfig({
-//   modulePathPrefix: "https://cdn.myun.info/workbox-v4.3.1/"
-// });
+importScripts("https://cdn.myun.info/workbox-v4.3.1/workbox-sw.js");
+workbox.setConfig({
+  modulePathPrefix: "https://cdn.myun.info/workbox-v4.3.1/"
+});
 if (workbox) {
   console.log(`Yay! Workbox is loaded!`);
 } else {
@@ -16,8 +16,8 @@ workbox.core.setCacheNameDetails({
   suffix: "v1.0.0"
 });
 // have our sw update and control a web page as soon as possible.
-workbox.skipWaiting();
-workbox.clientsClaim();
+workbox.core.skipWaiting();
+workbox.core.clientsClaim();
 
 // vue-cli3.0 supports pwa with the help of workbox-webpack-plugin, we need to get the precacheing list through this sentence.
 workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
