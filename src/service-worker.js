@@ -6,8 +6,8 @@ if (workbox) {
 
 // 设置缓存前缀和后缀，请根据实际项目名修改
 workbox.core.setCacheNameDetails({
-  prefix: "easy-front-vue-cli3",
-  suffix: "v1.0.0"
+  prefix: 'easy-front-vue-cli3',
+  suffix: 'v1.0.0'
 });
 // have our sw update and control a web page as soon as possible.
 workbox.core.skipWaiting();
@@ -22,7 +22,7 @@ workbox.routing.registerRoute(
   // 使用缓存，但尽快在后台更新
   workbox.strategies.staleWhileRevalidate({
     // 使用自定义缓存名称
-    cacheName: "css-cache"
+    cacheName: 'css-cache'
   })
 );
 workbox.routing.registerRoute(
@@ -31,14 +31,14 @@ workbox.routing.registerRoute(
   // 使用缓存，但尽快在后台更新
   workbox.strategies.staleWhileRevalidate({
     // 使用自定义缓存名称
-    cacheName: "js-cache"
+    cacheName: 'js-cache'
   })
 );
 
 workbox.routing.registerRoute(
   /\.(?:png|gif|jpg|jpeg|svg)$/,
   workbox.strategies.staleWhileRevalidate({
-    cacheName: "images",
+    cacheName: 'images',
     plugins: [
       new workbox.expiration.Plugin({
         maxEntries: 60,
@@ -50,8 +50,8 @@ workbox.routing.registerRoute(
 
 // api缓存，优选从网络获取，网络异常时再使用缓存，请根据实际api url配置RegExp
 workbox.routing.registerRoute(
-  new RegExp("https://m.hellomrbigbigshot.xyz/api"),
+  new RegExp('https://m.hellomrbigbigshot.xyz/api'),
   workbox.strategies.networkFirst({
-    cacheName: "api"
+    cacheName: 'api'
   })
 );

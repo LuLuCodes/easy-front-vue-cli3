@@ -308,3 +308,62 @@ npm run commit
 # 列举本次提交相关的issue id
 ? List any ISSUES CLOSED by this change (optional). E.g.: #31, #34:
 ```
+
+## PWA
+
+### 配置service-work.js
+请在 src/service-work.js 中进行以下配置：
+
+1、设置缓存前缀和后缀
+```js
+// 设置缓存前缀和后缀，请根据实际项目名修改
+workbox.core.setCacheNameDetails({
+  prefix: 'easy-front-vue-cli3',
+  suffix: 'v1.0.0'
+});
+```
+
+2、设置api url
+```js
+// api缓存，优选从网络获取，网络异常时再使用缓存，请根据实际api url配置RegExp
+workbox.routing.registerRoute(
+  new RegExp('https://m.hellomrbigbigshot.xyz/api'),
+  workbox.strategies.networkFirst({
+    cacheName: 'api'
+  })
+);
+```
+
+3、在manifest.json中配置应用名称和图标，用于浏览器将应用添加至桌面
+
+### 禁用PWA
+本项目默认开启PWA，如不使用PWA， 请进行以下操作：
+
+1、删除src下的文件registerServiceWorker.js和service-worker.js
+
+2、在src/main.js中删除以下代码：
+```js
+import './registerServiceWorker';
+```
+
+3、在vue.config.js中删除以下部分：
+```js
+pwa: {
+    name: 'easy-front-vue-cli3',
+    themeColor: '#4DBA87',
+    msTileColor: '#000000',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+    // configure the workbox plugin (GenerateSW or InjectManifest)
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      // swSrc is required in InjectManifest mode.
+      swSrc: 'src/service-worker.js',
+      importWorkboxFrom: 'disabled',
+      importScripts: 'https://cdn.myun.info/workbox-v4.3.1/workbox-sw.js'
+      // ...other Workbox options...
+    }
+  }
+```
+
+4、删除manifest.json文件
