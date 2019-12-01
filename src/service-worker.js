@@ -1,5 +1,3 @@
-"use strict";
-
 if (workbox) {
   console.log(`Yay! Workbox is loaded!`);
 } else {
