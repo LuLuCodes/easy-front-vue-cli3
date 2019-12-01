@@ -366,4 +366,4 @@ pwa: {
   }
 ```
 
-4、删除manifest.json文件
+4、删除public/manifest.json文件
