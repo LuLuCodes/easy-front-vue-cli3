@@ -1,7 +1,8 @@
 // vue.config.js
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
   CompressionPlugin = require('compression-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 const path = require('path');
 
 function resolve(dir) {
@@ -102,7 +103,9 @@ module.exports = {
           // vuex
           'https://cdn.myun.info/vuex-3.1.0/vuex.min.js',
           // axios
-          'https://cdn.myun.info/axios-0.18.0/axios.min.js'
+          'https://cdn.myun.info/axios-0.18.0/axios.min.js',
+          // localforage
+          'https://cdn.myun.info/localforage.min.js'
         ]
       };
       config.plugin('html').tap(args => {

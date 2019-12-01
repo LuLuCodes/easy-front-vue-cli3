@@ -19,6 +19,7 @@
     "axios": "^0.18.0",
     "crypto-js": "^3.1.9-1",
     "lib-flexible": "^0.3.2",
+    "localforage": "^1.7.3",
     "lodash": "^4.17.11",
     "vant": "2.0.2",
     "vue": "^2.6.10",
