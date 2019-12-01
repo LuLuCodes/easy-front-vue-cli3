@@ -10,6 +10,24 @@ function resolve(dir) {
 }
 
 module.exports = {
+  // options for the PWA plugin.
+  // see => https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
+  // https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin
+  pwa: {
+    name: 'easy-front-vue-cli3',
+    themeColor: '#4DBA87',
+    msTileColor: '#000000',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+    // configure the workbox plugin (GenerateSW or InjectManifest)
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      // swSrc is required in InjectManifest mode.
+      swSrc: 'src/service-worker.js',
+      importWorkboxFrom: 'disabled'
+      // ...other Workbox options...
+    }
+  },
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
       config.plugins.push(
@@ -126,11 +144,11 @@ module.exports = {
     }
   },
   devServer: {
-    // watchOptions: {
-    //   aggregateTimeout: 5000,
-    //   poll: true,
-    //   ignored: ['node_modules']
-    // }, // 如果在docker开发环境下运行，请开启此项
+    watchOptions: {
+      aggregateTimeout: 5000,
+      poll: true,
+      ignored: ['node_modules']
+    }, // 如果在docker开发环境下运行，请开启此项
     port: 8080, // 端口号
     // host: 'localhost',
     https: false, // https:{type:Boolean}

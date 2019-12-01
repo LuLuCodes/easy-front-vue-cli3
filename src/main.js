@@ -5,7 +5,7 @@ import router from './router';
 import store from './store';
 
 import './components';
-import './registerServiceWorker'
+import './registerServiceWorker';
 
 Vue.config.productionTip = false;
 
