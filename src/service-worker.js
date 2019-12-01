@@ -1,9 +1,5 @@
 "use strict";
 
-importScripts("https://cdn.myun.info/workbox-v4.3.1/workbox-sw.js");
-workbox.setConfig({
-  modulePathPrefix: "https://cdn.myun.info/workbox-v4.3.1/"
-});
 if (workbox) {
   console.log(`Yay! Workbox is loaded!`);
 } else {
