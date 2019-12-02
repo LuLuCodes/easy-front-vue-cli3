@@ -3,7 +3,12 @@ import Router from 'vue-router';
 import store from '../store';
 Vue.use(Router);
 
-let routes = [];
+let routes = [
+  {
+    path: '/',
+    redirect: '/login'
+  }
+];
 
 const routerContext = require.context('./', true, /index\.js$/);
 routerContext.keys().forEach(route => {
@@ -19,7 +24,6 @@ routerContext.keys().forEach(route => {
 });
 
 export default new Router({
-  mode: 'history',
   routes: routes,
   scrollBehavior(to, from, savedPosition) {
     // keep-alive 返回缓存页面后记录浏览位置
