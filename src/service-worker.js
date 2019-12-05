@@ -48,6 +48,23 @@ workbox.routing.registerRoute(
   })
 );
 
+// 获取oss上的资源，支持跨域
+// workbox.routing.registerRoute(
+//   /^https:\/\/images\.lancky\.com\/.*\.(jpe?g|png|gif|svg)/,
+//   workbox.strategies.staleWhileRevalidate({
+//     cacheName: 'oss-images',
+//     plugins: [
+//       new workbox.expiration.Plugin({
+//         maxEntries: 60,
+//         maxAgeSeconds: 5 * 24 * 60 * 60 // 5 Days
+//       })
+//     ],
+//     fetchOptions: {
+//       credentials: 'include'
+//     }
+//   })
+// );
+
 // api缓存，优选从网络获取，网络异常时再使用缓存，请根据实际api url配置RegExp
 workbox.routing.registerRoute(
   new RegExp('https://m.hellomrbigbigshot.xyz/api'),
