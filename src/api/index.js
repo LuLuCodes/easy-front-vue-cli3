@@ -65,11 +65,6 @@ service.interceptors.response.use(response => {
 
   switch (responseCode) {
     case 401: // 401：未登录
-      // 跳转登录页
-      router.push({
-        replace: '/login'
-      });
-      break;
     case 403: // 403: token过期
       // 弹出错误信息
       // window.localStorage.removeItem('authToken');
