@@ -49,7 +49,7 @@ workbox.routing.registerRoute(
   })
 );
 
-// 获取cdn上的资源，支持跨域
+// 获取cdn上的资源，支持跨域，按自己的域名规则进行配置
 workbox.routing.registerRoute(
   /^https:\/\/images\.lancky\.com\/.*\.(jpe?g|png|gif|svg)/,
   workbox.strategies.staleWhileRevalidate({
@@ -66,11 +66,23 @@ workbox.routing.registerRoute(
   })
 );
 
+//缓存主站路由，按自己域名规则进行配置
+workbox.routing.registerRoute(
+  // Vue
+  new RegExp('https://xxx.xxx.xxx'),
+  // 使用缓存，但尽快在后台更新
+  workbox.strategies.staleWhileRevalidate()
+);
+
 // api缓存，优选从网络获取，网络异常时再使用缓存，请根据实际api url配置RegExp，只支持get请求
 workbox.routing.registerRoute(
   new RegExp('https://m.hellomrbigbigshot.xyz/api'),
-  workbox.strategies.networkFirst({
-    cacheName: 'api'
+  workbox.strategies.staleWhileRevalidate({
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200]
+      })
+    ]
   })
 );
 

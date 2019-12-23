@@ -75,6 +75,38 @@ export default new Vuex.Store({
       } catch (error) {
         throw error;
       }
+    },
+    async getData({commit, rootState}, {url, data, needSign = true}) {
+      try {
+        if (typeof data === 'object' && process.env.VUE_APP_ENABLE_SIGN && needSign) {
+          const sign = md5(JSON.stringify(data));
+          data.S = aes.encrypt(sign.toString().toUpperCase(), url).toString();
+        }
+        const res = await api.get(url, data);
+        if (res) {
+          if (res.IsSuccess) {
+            if (Array.isArray(res.Data)) {
+              return {
+                List: res.Data,
+                Paging: res.Paging
+              };
+            } else if (typeof res.Data === 'string') {
+              return res.Data;
+            } else if (res.Paging) {
+              return {
+                ...res.Data,
+                Paging: res.Paging
+              };
+            } else {
+              return res.Data;
+            }
+          } else {
+            throw new Error(res.ErrorMsg);
+          }
+        }
+      } catch (error) {
+        throw error;
+      }
     }
   },
   plugins: [

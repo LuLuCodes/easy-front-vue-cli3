@@ -7,6 +7,7 @@ const service = axios.create({
   withCredentials: true
 });
 service.defaults.headers.post['Content-Type'] = 'application/json';
+service.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
 /**
  * 请求前拦截

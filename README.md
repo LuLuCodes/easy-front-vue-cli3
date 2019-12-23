@@ -367,3 +367,5 @@ pwa: {
 ```
 
 4、删除public/manifest.json文件
+
+5、删除package.json中的`devDependencies`里的`@vue/cli-plugin-pwa`依赖，并重新`npm install`
