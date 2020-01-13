@@ -24,6 +24,8 @@ export default {
   computed: {},
   created() {},
   mounted() {},
+  updated() {},
+  beforeDestroy() {},
   watch: {},
   methods: {}
 };

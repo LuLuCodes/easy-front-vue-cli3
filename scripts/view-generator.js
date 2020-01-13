@@ -73,7 +73,7 @@ process.stdin.on('end', () => {
 
 function dotExistDirectoryCreate(directory) {
   return new Promise((resolve) => {
-    mkdirs(directory, function () {
+    mkdirs(directory, function() {
       resolve(true);
     });
   });
@@ -85,7 +85,7 @@ function mkdirs(directory, callback) {
   if (exists) {
     callback();
   } else {
-    mkdirs(path.dirname(directory), function () {
+    mkdirs(path.dirname(directory), function() {
       fs.mkdirSync(directory);
       callback();
     });
