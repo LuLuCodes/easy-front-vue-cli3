@@ -369,3 +369,16 @@ pwa: {
 4、删除public/manifest.json文件
 
 5、删除package.json中的`devDependencies`里的`@vue/cli-plugin-pwa`依赖，并重新`npm install`
+
+
+### 在已经上线的项目中，关闭Service Work
+有些项目上线后，又不想使用Service Work， 请进行以下操作：
+
+1、在src/main.js中删除以下代码：
+```js
+import './registerServiceWorker';
+```
+2、在src/main.js中加入以下代码：
+```js
+import './unregisterServiceWorker';
+```
