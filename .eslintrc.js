@@ -323,6 +323,18 @@ module.exports = {
     // 对象的'{'后和'}'前没有空格
     'object-curly-spacing': [2, 'never'],
     // 数组的'['后和']'前不出现空格
-    'array-bracket-spacing': [2, 'never']
+    'array-bracket-spacing': [2, 'never'],
+    // 最大块嵌套深度为 5 层
+    'max-depth': [2, 5],
+    // 限制单行代码的长度
+    // @off 不限制
+    'max-len': 0,
+    // 限制单个文件最大行数
+    // @off 不限制
+    'max-lines': 0,
+    // 最大回调深度为 3 层
+    'max-nested-callbacks': [2, 3],
+    // 指定一个函数中所允许允许的最大语句数量
+    'max-statements': ['error', 100]
   }
 };
