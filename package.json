@@ -12,7 +12,8 @@
     "new:comp": "node ./scripts/component-generator",
     "new:view": "node ./scripts/view-generator",
     "pre-release": "vue-cli-service build --mode pre-release",
-    "test": "vue-cli-service build --mode test"
+    "test": "vue-cli-service build --mode test",
+    "genlog": "conventional-changelog -p angular -i .github/CHANGELOG.md -s"
   },
   "dependencies": {
     "autoprefixer": "^9.5.1",
