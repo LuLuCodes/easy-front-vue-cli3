@@ -13,6 +13,7 @@
     "new:view": "node ./scripts/view-generator",
     "pre-release": "vue-cli-service build --mode pre-release",
     "test": "vue-cli-service build --mode test",
+    "commit": "git cz",
     "genlog": "conventional-changelog -p angular -i .github/CHANGELOG.md -s"
   },
   "dependencies": {
