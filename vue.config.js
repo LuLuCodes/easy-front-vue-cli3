@@ -155,5 +155,6 @@ module.exports = {
     https: false, // https:{type:Boolean}
     open: true // 配置自动启动浏览器
     // proxy: 'http://localhost:4000' // 配置跨域处理,只有一个代理
+    // historyApiFallback: true // 如果采用history模式，开发时请开启此项
   }
 };
