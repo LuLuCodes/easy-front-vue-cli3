@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
+// import createPersistedState from 'vuex-persistedstate';
 import md5 from 'crypto-js/md5';
 import aes from 'crypto-js/aes';
 // import NodeRSA from 'node-rsa';
@@ -108,10 +108,11 @@ export default new Vuex.Store({
         throw error;
       }
     }
-  },
-  plugins: [
-    createPersistedState({
-      storage: window.sessionStorage
-    })
-  ]
+  }
+  // ,
+  // plugins: [
+  //   createPersistedState({
+  //     storage: window.sessionStorage
+  //   })
+  // ]
 });
