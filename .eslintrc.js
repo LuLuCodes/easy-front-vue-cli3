@@ -59,7 +59,7 @@ module.exports = {
     // 要求回调函数中有容错处理
     'handle-callback-err': [2, '^(err|error)$'],
     // 强制行的最大长度是80
-    code: '80',
+    'max-len': ['error', { code: 80 }],
     // 缩进使用tab
     indent: [
       2,
@@ -75,7 +75,7 @@ module.exports = {
     'key-spacing': [
       2,
       {
-        beforeColon: false,
+        beforeColon: true,
         afterColon: true
       }
     ],
@@ -303,7 +303,15 @@ module.exports = {
       2,
       'always',
       {
-        markers: ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
+        markers: [
+          'global',
+          'globals',
+          'eslint',
+          'eslint-disable',
+          '*package',
+          '!',
+          ','
+        ]
       }
     ],
     // 禁止模板字符串中的变量{}内出现空格

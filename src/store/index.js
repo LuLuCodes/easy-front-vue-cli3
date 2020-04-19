@@ -25,14 +25,18 @@ export default new Vuex.Store({
     updateKeepAliveInclude: (state, data) => {
       state.keepAliveInclude = data;
     },
-    clearKeepAliveInclude: (state) => {
+    clearKeepAliveInclude: state => {
       state.keepAliveInclude = [];
     }
   },
   actions: {
-    async postData({commit, rootState}, {url, data, needSign = true}) {
+    async postData({ commit, rootState }, { url, data, needSign = true }) {
       try {
-        if (typeof data === 'object' && process.env.VUE_APP_ENABLE_SIGN && needSign) {
+        if (
+          typeof data === 'object' &&
+          process.env.VUE_APP_ENABLE_SIGN &&
+          needSign
+        ) {
           const sign = md5(JSON.stringify(data));
           // JSEncrypt...
           // let encrypt = new window.JSEncrypt();
@@ -76,9 +80,13 @@ export default new Vuex.Store({
         throw error;
       }
     },
-    async getData({commit, rootState}, {url, data, needSign = true}) {
+    async getData({ commit, rootState }, { url, data, needSign = true }) {
       try {
-        if (typeof data === 'object' && process.env.VUE_APP_ENABLE_SIGN && needSign) {
+        if (
+          typeof data === 'object' &&
+          process.env.VUE_APP_ENABLE_SIGN &&
+          needSign
+        ) {
           const sign = md5(JSON.stringify(data));
           data.S = aes.encrypt(sign.toString().toUpperCase(), url).toString();
         }
