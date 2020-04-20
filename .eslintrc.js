@@ -75,7 +75,7 @@ module.exports = {
     'key-spacing': [
       2,
       {
-        beforeColon: true,
+        beforeColon: false,
         afterColon: true
       }
     ],
@@ -329,7 +329,7 @@ module.exports = {
     // 线上禁用debugger
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // 对象的'{'后和'}'前没有空格
-    'object-curly-spacing': [2, 'never'],
+    'object-curly-spacing': [2, 'always'],
     // 数组的'['后和']'前不出现空格
     'array-bracket-spacing': [2, 'never'],
     // 最大块嵌套深度为 5 层
