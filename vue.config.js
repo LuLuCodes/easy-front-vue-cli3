@@ -14,22 +14,6 @@ module.exports = {
   // see => https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
   // https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin
   productionSourceMap: process.env.NODE_ENV !== 'production',
-  pwa: {
-    name: 'easy-front-vue-cli3',
-    themeColor: '#4DBA87',
-    msTileColor: '#000000',
-    appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'black',
-    // configure the workbox plugin (GenerateSW or InjectManifest)
-    workboxPluginMode: 'InjectManifest',
-    workboxOptions: {
-      // swSrc is required in InjectManifest mode.
-      swSrc: 'src/service-worker.js',
-      importWorkboxFrom: 'disabled',
-      importScripts: 'https://cdn.myun.info/workbox-v4.3.1/workbox-sw.js'
-      // ...other Workbox options...
-    }
-  },
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
       config.plugins.push(
