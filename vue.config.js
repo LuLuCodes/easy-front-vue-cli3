@@ -1,6 +1,5 @@
 // vue.config.js
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
-  CompressionPlugin = require('compression-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const path = require('path');
@@ -8,7 +7,6 @@ const path = require('path');
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
-
 module.exports = {
   // options for the PWA plugin.
   // see => https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
@@ -72,21 +70,6 @@ module.exports = {
           bypassOnDebug: true
         })
         .end();
-      // #endregion
-
-      // #region 启用GZip压缩
-      config
-        .plugin('compression')
-        .use(CompressionPlugin, {
-          asset: '[path].gz[query]',
-          algorithm: 'gzip',
-          test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
-          threshold: 10240,
-          minRatio: 0.8,
-          cache: true
-        })
-        .tap(args => {});
-
       // #endregion
 
       // #region 忽略生成环境打包的文件
