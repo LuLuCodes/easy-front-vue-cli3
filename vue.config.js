@@ -8,9 +8,6 @@ function resolve(dir) {
   return path.join(__dirname, dir);
 }
 module.exports = {
-  // options for the PWA plugin.
-  // see => https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
-  // https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin
   productionSourceMap: process.env.NODE_ENV !== 'production',
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
@@ -24,7 +21,7 @@ module.exports = {
               pure_funcs: ['console.log'] // 移除console
             }
           },
-          sourceMap: true,
+          sourceMap: false,
           parallel: true
         })
       );
