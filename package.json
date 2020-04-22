@@ -23,7 +23,7 @@
     "lib-flexible": "^0.3.2",
     "localforage": "^1.7.3",
     "lodash-es": "^4.17.15",
-    "vant": "2.6.2",
+    "vant": "^2.6.2",
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.0",
     "vue-router": "^3.1.6",

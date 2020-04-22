@@ -2,12 +2,10 @@
   <div id="app">
     <keep-alive :include="include">
       <!-- 需要缓存的视图组件 -->
-      <router-view v-if="$route.meta.keepAlive">
-      </router-view>
+      <router-view v-if="$route.meta.keepAlive"> </router-view>
     </keep-alive>
 
-    <router-view v-if="!$route.meta.keepAlive">
-    </router-view>
+    <router-view v-if="!$route.meta.keepAlive"> </router-view>
   </div>
 </template>
 
@@ -44,4 +42,7 @@ export default {
 </script>
 
 <style lang="less">
+@import '../node_modules/vant/lib/index.css';
+@import '//at.alicdn.com/t/font_1621680_1n91aq8ljkai.css';
+@import './assets/css/style.less';
 </style>

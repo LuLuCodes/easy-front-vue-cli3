@@ -74,11 +74,15 @@ module.exports = {
         vue: 'Vue',
         axios: 'axios',
         'vue-router': 'VueRouter',
-        vuex: 'Vuex'
+        vuex: 'Vuex',
+        vant: 'Vant'
       };
       config.externals(externals);
       const cdn = {
-        css: [],
+        css: [
+          // vant
+          'https://cdn.myun.info/vant-2.6.2/index.css'
+        ],
         js: [
           // vue
           'https://cdn.myun.info/vue-2.6.11/vue.min.js',
@@ -89,7 +93,9 @@ module.exports = {
           // axios
           'https://cdn.myun.info/axios-0.19.2/axios.min.js',
           // localforage
-          'https://cdn.myun.info/localforage.min.js'
+          'https://cdn.myun.info/localforage.min.js',
+          // vant
+          'https://cdn.myun.info/vant-2.6.2/vant.min.js'
         ]
       };
       config.plugin('html').tap(args => {

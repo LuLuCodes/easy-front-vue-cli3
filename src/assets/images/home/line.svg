@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="37px" height="70px" viewBox="0 0 37 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Line</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-600.0%" y="-25.7%" width="1300.0%" height="151.4%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="6 0" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="体温计" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.718191964">
+        <g id="Tab-1健康商城/1-1首页" transform="translate(-643.000000, -145.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="banner+入口" transform="translate(0.000000, 53.000000)">
+                <g id="sort" transform="translate(0.000000, 91.000000)">
+                    <g id="Group-7">
+                        <g id="更多分类">
+                            <path d="M663,1 C661.343146,1 660,2.34314575 660,4 L660,68 C660,69.6568542 661.343146,71 663,71 L663,71 L663,71 L663,1 Z" id="Line" style="mix-blend-mode: multiply;" filter="url(#filter-1)"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
