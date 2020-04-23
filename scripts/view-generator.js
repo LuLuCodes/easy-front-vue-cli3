@@ -5,9 +5,7 @@ const resolve = (...file) => path.resolve(__dirname, ...file);
 const log = message => console.log(chalk.green(`${message}`));
 const successLog = message => console.log(chalk.blue(`${message}`));
 const errorLog = error => console.log(chalk.red(`${error}`));
-const {
-  vueTemplate
-} = require('./template');
+const { vueTemplate } = require('./template');
 
 const generateFile = (path, data) => {
   if (fs.existsSync(path)) {
@@ -28,7 +26,9 @@ const generateFile = (path, data) => {
 log('请输入要生成的页面组件名称、会生成在 views/目录下');
 let componentName = '';
 process.stdin.on('data', async chunk => {
-  const inputName = String(chunk).trim().toString();
+  const inputName = String(chunk)
+    .trim()
+    .toString();
   /**
    * Vue页面组件路径
    */
@@ -72,7 +72,7 @@ process.stdin.on('end', () => {
 });
 
 function dotExistDirectoryCreate(directory) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     mkdirs(directory, function() {
       resolve(true);
     });
