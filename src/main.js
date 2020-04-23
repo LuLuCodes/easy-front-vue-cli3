@@ -13,7 +13,7 @@ FastClick.attach(document.body);
 
 Vue.use(Vant);
 
-// 注册过滤器
+// 注册全局过滤器
 for (const key in filters) {
   Vue.filter(key, filters[key]);
 }

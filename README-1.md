@@ -4,40 +4,53 @@
 
 ## 使用方法
 
+### clone 项目到本地
+
+```
+https://github.com/LuLuCodes/easy-front-vue-cli3.git
+
+```
+
+### 删除.git 和修改项目名称
+
+```shell
+rm -rf .git
+```
+
 ### 安装依赖
 
 ```shell
-npm install
+yarn install
 ```
 
 ### 调试模式
 
 ```shell
-npm run dev
+yarn run dev
 ```
 
 ### 打包生产环境
 
 ```shell
-npm run build
+yarn run build
 ```
 
 ### 打包测试环境
 
 ```shell
-npm run test
+yarn run test
 ```
 
 ### 打包预发布环境
 
 ```shell
-npm run pre-release
+yarn run pre-release
 ```
 
 ### 检查语法和修复文件
 
 ```shell
-npm run lint
+yarn run lint
 ```
 
 ### 修改不同构建目标配置
@@ -82,8 +95,8 @@ const cdn = {
 ### 新建页面或组件
 
 ```shell
-npm run new:view // 新建页面，支持单个vue文件如home.vue，或者目录如home/index.vue
-npm run new:comp // 新建组件，支持单个vue文件如my-button.vue，或者目录如my-button/index.vue
+yarn run new:view // 新建页面，支持单个vue文件如home.vue，或者目录如home/index.vue
+yarn run new:comp // 新建组件，支持单个vue文件如my-button.vue，或者目录如my-button/index.vue
 ```
 
 ### 动态加载路由
@@ -234,6 +247,30 @@ export default [
 ];
 ```
 
+### 数据通讯签名机制
+
+前端请求数据时，对 post 请求中数据进行 MD5 签名并对签名进行 RSA 加密
+
+#### 是否启用数据签名
+
+在.env\*环境配置文件中，增加`VUE_APP_ENABLE_SIGN = "1"`
+
+#### 设置公钥
+
+1、公钥如何产生，请查看[easy-front-express-api](https://github.com/LuLuCodes/easy-front-express-api)
+
+2、请在 src/store/index.js 中设置公钥
+
+```
+// 设置公钥
+const pem = `-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCoVF1Z6CSMKdNPtdkuNQWCIYiZ
+ZTvjEuEOAEPo0z2rz6A/m6byE8B84V69f+xtNg9s1QtZ0jLW3Lvumps1GmLSXwCX
+rJOcKm+3jmB3+KecXTguJMJHEkxvLYUKk270ennfSq7uQZ9P9iIEDgHHaQMJd/I5
+M6E1RulpjXQt5cpzUQIDAQAB
+-----END PUBLIC KEY-----`;
+```
+
 ## git commit
 
 ### 全局安装 commitizen
@@ -272,18 +309,85 @@ npm run commit
 ? List any ISSUES CLOSED by this change (optional). E.g.: #31, #34:
 ```
 
-## 公共方法
+## PWA
+
+### 配置 service-work.js
+
+请在 src/service-work.js 中进行以下配置：
+
+1、设置缓存前缀和后缀
 
 ```js
-// in main.js
-// 将常用方法和过滤器直接挂在在Vue上，mixins上编写功能模块的通用方法，减少mixins的体积
-import common from '@/utils/common'; // 全局方法
-import filters from '@/utils/filters'; // 全局过滤器
+// 设置缓存前缀和后缀，请根据实际项目名修改
+workbox.core.setCacheNameDetails({
+  prefix: 'easy-front-vue-cli3',
+  suffix: 'v1.0.0'
+});
+```
 
-// 注册全局过滤器
-for (const key in filters) {
-  Vue.filter(key, filters[key]);
-}
+2、设置 api url
 
-Vue.use(common); // 注册全局方法
+```js
+// api缓存，优选从网络获取，网络异常时再使用缓存，请根据实际api url配置RegExp
+workbox.routing.registerRoute(
+  new RegExp('https://m.hellomrbigbigshot.xyz/api'),
+  workbox.strategies.networkFirst({
+    cacheName: 'api'
+  })
+);
+```
+
+3、在 manifest.json 中配置应用名称和图标，用于浏览器将应用添加至桌面
+
+### 禁用 PWA
+
+本项目默认开启 PWA，如不使用 PWA， 请进行以下操作：
+
+1、删除 src 下的文件 registerServiceWorker.js 和 service-worker.js
+
+2、在 src/main.js 中删除以下代码：
+
+```js
+import './registerServiceWorker';
+```
+
+3、在 vue.config.js 中删除以下部分：
+
+```js
+pwa: {
+    name: 'easy-front-vue-cli3',
+    themeColor: '#4DBA87',
+    msTileColor: '#000000',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+    // configure the workbox plugin (GenerateSW or InjectManifest)
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      // swSrc is required in InjectManifest mode.
+      swSrc: 'src/service-worker.js',
+      importWorkboxFrom: 'disabled',
+      importScripts: 'https://cdn.myun.info/workbox-v4.3.1/workbox-sw.js'
+      // ...other Workbox options...
+    }
+  }
+```
+
+4、删除 public/manifest.json 文件
+
+5、删除 package.json 中的`devDependencies`里的`@vue/cli-plugin-pwa`依赖，并重新`npm install`
+
+### 在已经上线的项目中，关闭 Service Work
+
+有些项目上线后，又不想使用 Service Work， 请进行以下操作：
+
+1、在 src/main.js 中删除以下代码：
+
+```js
+import './registerServiceWorker';
+```
+
+2、在 src/main.js 中加入以下代码：
+
+```js
+import './unregisterServiceWorker';
 ```
