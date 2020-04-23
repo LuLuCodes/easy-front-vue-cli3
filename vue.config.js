@@ -2,15 +2,23 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const path = require('path');
+const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 module.exports = {
-  productionSourceMap: process.env.NODE_ENV !== 'production',
+  productionSourceMap: !isProduction,
+  css: {
+    extract: true, // 是否使用css分离插件 ExtractTextPlugin
+    sourceMap: false, // 开启 CSS source maps?
+    loaderOptions: {} // css预设器配置项
+  },
   configureWebpack: config => {
-    if (process.env.NODE_ENV === 'production') {
+    if (isProduction) {
       config.plugins.push(
         new UglifyJsPlugin({
           uglifyOptions: {
@@ -25,12 +33,36 @@ module.exports = {
           parallel: true
         })
       );
+      // #region 启用GZip压缩
+      config.plugins.push(
+        new CompressionWebpackPlugin({
+          algorithm: 'gzip',
+          test: /\.js$|\.html$|\.json$|\.css/,
+          threshold: 10240,
+          minRatio: 0.8
+        })
+      );
+      // #endregion
+
+      // #region 取消webpack警告的性能提示
+      config.performance = {
+        hints: 'warning',
+        //入口起点的最大体积
+        maxEntrypointSize: 50000000,
+        //生成文件的最大体积
+        maxAssetSize: 30000000,
+        //只给出 js 文件的性能提示
+        assetFilter: function(assetFilename) {
+          return assetFilename.endsWith('.js');
+        }
+      };
+      // #endregion
     }
   },
   chainWebpack: config => {
     // #region 关闭预加载
-    // config.plugins.delete('prefetch');
-    // config.plugins.delete('preload');
+    config.plugins.delete('prefetch');
+    config.plugins.delete('preload');
     // #endregion 关闭预加载
 
     config.resolve.alias
@@ -57,7 +89,7 @@ module.exports = {
     // imagesRule.exclude.add(path.resolve('src/assets/icons'));
     // #endregion svg-config
 
-    if (process.env.NODE_ENV !== 'development') {
+    if (!isDevelopment) {
       // #region 图片压缩
       config.module
         .rule('images')
@@ -79,10 +111,7 @@ module.exports = {
       };
       config.externals(externals);
       const cdn = {
-        css: [
-          // vant
-          'https://cdn.myun.info/vant-2.6.2/index.css'
-        ],
+        css: [],
         js: [
           // vue
           'https://cdn.myun.info/vue-2.6.11/vue.min.js',

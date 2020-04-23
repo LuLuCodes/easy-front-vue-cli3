@@ -4,10 +4,23 @@ import router from './router';
 import store from './store';
 import Vant from 'vant';
 import 'vant/lib/index.css';
+import common from '@/utils/common'; // 全局方法
+import filters from '@/utils/filters'; // 全局过滤器
+import '@/utils/permission'; // 路由守卫
 import './components';
+import FastClick from 'fastclick'; // 解决300毫秒问题，PC端不需要
+FastClick.attach(document.body);
+
+Vue.use(Vant);
+
+// 注册过滤器
+for (const key in filters) {
+  Vue.filter(key, filters[key]);
+}
+
+Vue.use(common); // 注册全局方法
 
 Vue.config.productionTip = false;
-Vue.use(Vant);
 
 // 检查是否登录
 // router.beforeEach(async(to, from, next) => {

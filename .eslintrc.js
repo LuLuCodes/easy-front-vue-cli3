@@ -285,7 +285,7 @@ module.exports = {
     // 块语句必须总是至少有一个前置空格
     'space-before-blocks': [2, 'always'],
     // function的左括号之前不加空格
-    'space-before-function-paren': [2, 'never'],
+    'space-before-function-paren': 0,
     // 强制圆括号内没有空格
     'space-in-parens': [2, 'never'],
     // 要求中缀操作符周围有空格
