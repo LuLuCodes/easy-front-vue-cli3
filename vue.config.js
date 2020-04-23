@@ -11,6 +11,7 @@ function resolve(dir) {
   return path.join(__dirname, dir);
 }
 module.exports = {
+  outputDir: './www/dist',
   productionSourceMap: !isProduction,
   css: {
     extract: true, // 是否使用css分离插件 ExtractTextPlugin
