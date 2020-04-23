@@ -65,7 +65,7 @@
     <section class="home-class txt-c">
       <div>
         <p class="img-auto">
-          <img src="../../assets/images/home/class1.png" alt />
+          <img src="../../assets/images/svg.svg" alt />
         </p>
         <h2 class="f13">女性健康</h2>
       </div>

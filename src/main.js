@@ -8,6 +8,8 @@ import './components';
 
 Vue.config.productionTip = false;
 Vue.use(Vant);
+
+// 检查是否登录
 // router.beforeEach(async(to, from, next) => {
 //   const token = await store.dispatch('postData', {
 //     url: '/user/get-auth-token',
