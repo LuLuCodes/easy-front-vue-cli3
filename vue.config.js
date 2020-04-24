@@ -115,17 +115,17 @@ module.exports = {
         css: [],
         js: [
           // vue
-          'https://cdn.myun.info/vue-2.6.11/vue.min.js',
+          '//cdn.myun.info/vue-2.6.11/vue.min.js',
           // vue-router
-          'https://cdn.myun.info/vue-router-3.1.6/vue-router.min.js',
+          '//cdn.myun.info/vue-router-3.1.6/vue-router.min.js',
           // vuex
-          'https://cdn.myun.info/vuex-3.2.0/vuex.min.js',
+          '//cdn.myun.info/vuex-3.2.0/vuex.min.js',
           // axios
-          'https://cdn.myun.info/axios-0.19.2/axios.min.js',
+          '//cdn.myun.info/axios-0.19.2/axios.min.js',
           // localforage
-          'https://cdn.myun.info/localforage.min.js',
+          '//cdn.myun.info/localforage.min.js',
           // vant
-          'https://cdn.myun.info/vant-2.6.2/vant.min.js'
+          '//cdn.myun.info/vant-2.6.2/vant.min.js'
         ]
       };
       config.plugin('html').tap(args => {
