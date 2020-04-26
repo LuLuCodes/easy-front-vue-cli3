@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { post } from '../api';
 // import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
@@ -17,7 +18,22 @@ export default new Vuex.Store({
       state.keepAliveInclude = [];
     }
   },
-  actions: {}
+  actions: {
+    async checkAuthToken({ commit, rootState }) {
+      // 这里请求api，获取token
+      return '';
+    },
+    async login({ commit, rootState }, { data }) {
+      // 这里请求api登录，并更新vuex
+      await post({ url: '/user/login', data });
+      return '';
+    },
+    async logout({ commit, rootState }, { data }) {
+      // 这里请求api退出登录，并清理vuex
+      await post({ url: '/user/logout', data });
+      return '';
+    }
+  }
   // ,
   // plugins: [
   //   createPersistedState({
