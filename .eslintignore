@@ -2,4 +2,3 @@ node_modules
 vue.config.js
 postcss.config.js
 babel.config.js
-src/service-worker.js
