@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { post } from '../api';
+import api from '../api';
 // import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
@@ -19,18 +19,20 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async checkAuthToken({ commit, rootState }) {
+    async checkAuthToken({ commit, rootState }, { data }) {
       // 这里请求api，获取token
-      return '';
+      await api.post({ url: '/user/login', data, needSign: false });
+      await api.post({ url: '/user/logout', data, needSign: false });
+      return '123';
     },
     async login({ commit, rootState }, { data }) {
       // 这里请求api登录，并更新vuex
-      await post({ url: '/user/login', data });
+      await api.post({ url: '/user/login', data });
       return '';
     },
     async logout({ commit, rootState }, { data }) {
       // 这里请求api退出登录，并清理vuex
-      await post({ url: '/user/logout', data });
+      await api.post({ url: '/user/logout', data });
       return '';
     }
   }
