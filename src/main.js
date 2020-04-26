@@ -10,8 +10,6 @@ import filters from '@/utils/filters'; // 全局过滤器
 import '@/utils/permission'; // 路由守卫
 import VueLazyload from 'vue-lazyload'; // 图片懒加载
 import './components';
-import FastClick from 'fastclick'; // 解决300毫秒问题，PC端不需要
-FastClick.attach(document.body);
 
 Vue.prototype.$api = api; // 将api挂载到vue的原型上
 

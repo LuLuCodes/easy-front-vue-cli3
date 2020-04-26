@@ -1,6 +1,20 @@
 # easy-front-vue-cli3
 
-基于 vue cli3 的项目工程模板
+基于 vue cli3 的项目工程模板 2.0
+
+## 2.0 改进点
+
+- vue 全套升级至最新版本
+- axios 从之前的 vuex 中独立，并挂载到 VUE 原型上
+- axios 增加重试机制
+- 精简 mixins，将全局方法挂载到 VUE 原型上
+- 增加全局过滤器
+- 修改输出目录，将 dist 目录迁移到 www/dist 下，同时增加 publish.html，配合 [www.conf](https://github.com/joneqian/centos_install_shell/blob/master/www.conf)，实现发布时自动挂载小火箭
+- 增加异步组件懒加载示例
+- 路由守卫构建成单独的 js，方便管理
+- 优化打包过程
+
+v1.0 的文档请看[这里]()
 
 ## 使用方法
 
@@ -50,6 +64,8 @@ npm run lint
 ```
 
 ### 以 cdn 方式引用第三方资源（以 vant 为例），修改 vue.config.js
+
+**注意：在具体项目中，请使用正式环境的 oss，cdn.myun.info 只是临时域名，随时会变更**
 
 ```js
 var externals = {
@@ -287,3 +303,72 @@ for (const key in filters) {
 
 Vue.use(common); // 注册全局方法
 ```
+
+## 异步组件懒加载
+
+```js
+components: {
+  // 组件推荐使用异步懒加载方式
+  /** 警告：
+  * 并非所有组件都推荐使用异步懒加载，异步懒加载的组件代码并不会直接和主组件的代码一起被加载，而是在需要时才请求.
+  * 这意味着在增加了http的请求，在网络差的情况下可能出现渲染延迟的情况.
+  */
+  'home-goods-item': () => import('../../components/home-goods-item')
+}
+```
+
+## axios 请求重试机制
+
+```js
+// in src/api/request.js
+service.interceptors.request.use(
+  config => {
+    config.retry = 2; // 重试次数
+    config.retryDelay = 500; // 重试延时
+    config.shouldRetry = error => {
+      // 只有在断网或者超时重试，其他的(4xx,5xx)不重试
+      // 如果开启重试机制，timeout建议不要设置过长
+      return !error.response;
+    }; // 重试条件，默认只要是错误都需要重试
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+```
+
+```js
+// in src/api/request.js service.interceptors.response.use
+if (
+  config &&
+  config.retry &&
+  config.shouldRetry &&
+  typeof config.shouldRetry === 'function'
+) {
+  // 判断是否满足重试条件
+  if (config.shouldRetry(error)) {
+    // 设置重置次数，默认为0
+    config.__retryCount = config.__retryCount || 0;
+    // 判断是否超过了重试次数
+    if (config.__retryCount < config.retry) {
+      // 重试次数自增
+      config.__retryCount += 1;
+      // 延时处理
+      const backoff = new Promise(function(resolve) {
+        setTimeout(function() {
+          resolve();
+        }, config.retryDelay || 1);
+      });
+      // 重新发起axios请求
+      return backoff.then(function() {
+        return service(config);
+      });
+    }
+  }
+}
+```
+
+## 发布小火箭
+
+发布小火箭页面在 www 目录下，在正式项目中使用时，请根据实际需求修改
