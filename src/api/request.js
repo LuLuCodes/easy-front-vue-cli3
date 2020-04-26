@@ -27,11 +27,7 @@ service.interceptors.request.use(
     config.retry = 1; // 重试次数
     config.retryDelay = 1000; // 重试延时
     config.shouldRetry = error => {
-      if (error) {
-        return true;
-      } else {
-        return false;
-      }
+      return !error.response; // 只有在断网或者超时重试，其他的(4xx,5xx)不重试
     }; // 重试条件，默认只要是错误都需要重试
     return config;
   },
