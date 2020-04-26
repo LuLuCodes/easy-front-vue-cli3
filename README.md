@@ -13,6 +13,7 @@
 - 增加异步组件懒加载示例
 - 路由守卫构建成单独的 js，方便管理
 - 优化打包过程
+- 移除 PWA(目前 pwa 技术点没有摸透，没法构建合适生产的解决方案，暂时先移除，后面将拉单独的分支来完善)
 
 v1.0 的文档请看[这里](https://github.com/LuLuCodes/easy-front-vue-cli3/blob/master/README-1.md)
 
