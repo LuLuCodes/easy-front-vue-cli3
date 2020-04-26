@@ -4,22 +4,22 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const path = require('path');
-const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = process.env.NODE_ENV === 'development';
+const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV);
+const IS_DEV = ['development', 'develop'].includes(process.env.NODE_ENV);
 
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 module.exports = {
   outputDir: './www/dist',
-  productionSourceMap: !isProduction,
+  productionSourceMap: !IS_PROD,
   css: {
-    extract: true, // 是否使用css分离插件 ExtractTextPlugin
+    extract: IS_PROD, // 是否使用css分离插件 ExtractTextPlugin
     sourceMap: false, // 开启 CSS source maps?
     loaderOptions: {} // css预设器配置项
   },
   configureWebpack: config => {
-    if (isProduction) {
+    if (IS_PROD) {
       config.plugins.push(
         new UglifyJsPlugin({
           uglifyOptions: {
@@ -90,7 +90,7 @@ module.exports = {
     // imagesRule.exclude.add(path.resolve('src/assets/icons'));
     // #endregion svg-config
 
-    if (!isDevelopment) {
+    if (!IS_DEV) {
       // #region 图片压缩
       config.module
         .rule('images')
@@ -107,8 +107,8 @@ module.exports = {
         vue: 'Vue',
         axios: 'axios',
         'vue-router': 'VueRouter',
-        vuex: 'Vuex',
-        vant: 'Vant'
+        vuex: 'Vuex'
+        // vant: 'Vant'
       };
       config.externals(externals);
       const cdn = {
@@ -123,9 +123,9 @@ module.exports = {
           // axios
           '//cdn.myun.info/axios-0.19.2/axios.min.js',
           // localforage
-          '//cdn.myun.info/localforage.min.js',
+          '//cdn.myun.info/localforage.min.js'
           // vant
-          '//cdn.myun.info/vant-2.6.2/vant.min.js'
+          // '//cdn.myun.info/vant-2.6.2/vant.min.js'
         ]
       };
       config.plugin('html').tap(args => {
@@ -133,6 +133,42 @@ module.exports = {
         return args;
       });
       // #endregion
+
+      config
+        .plugin('ScriptExtHtmlWebpackPlugin')
+        .after('html')
+        .use('script-ext-html-webpack-plugin', [
+          {
+            // 将 runtime 作为内联引入不单独存在
+            inline: /runtime\..*\.js$/
+          }
+        ])
+        .end();
+      config.optimization.splitChunks({
+        chunks: 'all',
+        cacheGroups: {
+          // cacheGroups 下可以可以配置多个组，每个组根据test设置条件，符合test条件的模块
+          commons: {
+            name: 'chunk-components',
+            test: resolve('src/components'),
+            minChunks: 3, //  被至少用三次以上打包分离
+            priority: 5, // 优先级
+            reuseExistingChunk: true // 表示是否使用已有的 chunk，如果为 true 则表示如果当前的 chunk 包含的模块已经被抽取出去了，那么将不会重新生成新的。
+          },
+          node_vendors: {
+            name: 'chunk-libs',
+            chunks: 'initial', // 只打包初始时依赖的第三方
+            test: /[\\/]node_modules[\\/]/,
+            priority: 10
+          },
+          vantUI: {
+            name: 'chunk-vant', // 单独将 vantUI 拆包
+            priority: 20, // 数字大权重到，满足多个 cacheGroups 的条件时候分到权重高的
+            test: /[\\/]node_modules[\\/]_?vant(.*)/
+          }
+        }
+      });
+      config.optimization.runtimeChunk('single');
 
       // #region 分析打包体积
       if (process.env.IS_ANALYZE) {

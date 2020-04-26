@@ -12,7 +12,7 @@
 - 修改输出目录，将 dist 目录迁移到 www/dist 下，同时增加 publish.html，配合 [www.conf](https://github.com/joneqian/centos_install_shell/blob/master/www.conf)，实现发布时自动挂载小火箭
 - 增加异步组件懒加载示例
 - 路由守卫构建成单独的 js，方便管理
-- 优化打包过程
+- 优化打包过程(代码拆分)
 - 移除 PWA(目前 pwa 技术点没有摸透，没法构建合适生产的解决方案，暂时先移除，后面将拉单独的分支来完善)
 
 v1.0 的文档请看[这里](https://github.com/LuLuCodes/easy-front-vue-cli3/blob/master/README-1.md)
@@ -369,6 +369,11 @@ if (
   }
 }
 ```
+
+## 为什么 vant 没有用 cdn？
+
+是否使用 cdn，看具体场景，如果项目中用到大部分的组件，可以使用 cdn 引入！
+如果只是部分组件，特别是没有使用的 vant 业务组件时，可以按需引用！
 
 ## 发布小火箭
 

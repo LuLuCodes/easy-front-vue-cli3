@@ -6,7 +6,7 @@ const resolve = (...file) => path.resolve(__dirname, ...file);
 const log = message => console.log(chalk.green(`${message}`));
 const successLog = message => console.log(chalk.blue(`${message}`));
 const errorLog = error => console.log(chalk.red(`${error}`));
-const {vueTemplate, entryTemplate} = require('./template');
+const { vueTemplate, entryTemplate } = require('./template');
 log('请输入要生成的组件名称、如需生成全局组件，请加 global/ 前缀');
 
 const generateFile = (path, data) => {
@@ -28,7 +28,9 @@ const generateFile = (path, data) => {
 
 let componentName = '';
 process.stdin.on('data', async chunk => {
-  const inputName = String(chunk).trim().toString();
+  const inputName = String(chunk)
+    .trim()
+    .toString();
   /**
    * 组件目录路径
    */
@@ -75,7 +77,7 @@ process.stdin.on('end', () => {
   process.exit();
 });
 function dotExistDirectoryCreate(directory) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     mkdirs(directory, function() {
       resolve(true);
     });

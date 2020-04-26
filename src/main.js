@@ -3,8 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import api from './api';
-import Vant from 'vant';
-import 'vant/lib/index.css';
+import '@/plugins/vant'; // 全局引入按需引入UI库 vant
 import common from '@/utils/common'; // 全局方法
 import filters from '@/utils/filters'; // 全局过滤器
 import '@/utils/permission'; // 路由守卫
@@ -13,7 +12,6 @@ import './components';
 
 Vue.prototype.$api = api; // 将api挂载到vue的原型上
 
-Vue.use(Vant);
 Vue.use(VueLazyload, {
   loading: '//image.lancky.com/assets/images/lazy-load/ljs/list.jpg?v=2',
   error: '//image.lancky.com/assets/images/lazy-load/ljs/list.jpg?v=2',

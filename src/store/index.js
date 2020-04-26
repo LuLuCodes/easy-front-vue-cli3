@@ -21,8 +21,6 @@ export default new Vuex.Store({
   actions: {
     async checkAuthToken({ commit, rootState }, { data }) {
       // 这里请求api，获取token
-      await api.post({ url: '/user/login', data, needSign: false });
-      await api.post({ url: '/user/logout', data, needSign: false });
       return '123';
     },
     async login({ commit, rootState }, { data }) {

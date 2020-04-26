@@ -22,10 +22,20 @@ export default {
     }
   },
   computed: {},
-  created() {},
-  mounted() {},
-  updated() {},
-  beforeDestroy() {},
+  created() {
+    // api请求尽量放在这里
+    console.log('this is created');
+  },
+  mounted() {
+    // 对数据的操作尽量放在这里
+    console.log('this is mounted');
+  },
+  updated() {
+    console.log('this is updated');
+  },
+  beforeDestroy() {
+    console.log('this is beforeDestroy');
+  },
   watch: {},
   methods: {}
 };

@@ -195,7 +195,9 @@
   </div>
 </template>
 <script>
+import homeMixin from '@/mixins/home-mixins.js';
 export default {
+  mixins: [homeMixin],
   components: {
     // 组件推荐使用异步懒加载方式
     /** 警告：
