@@ -24,10 +24,12 @@ service.interceptors.request.use(
     // if (authToken) {
     //   config.headers['Authorization'] = `Bearer ${authToken}`;
     // }
-    config.retry = 1; // 重试次数
-    config.retryDelay = 1000; // 重试延时
+    config.retry = 2; // 重试次数
+    config.retryDelay = 500; // 重试延时
     config.shouldRetry = error => {
-      return !error.response; // 只有在断网或者超时重试，其他的(4xx,5xx)不重试
+      // 只有在断网或者超时重试，其他的(4xx,5xx)不重试
+      // 如果开启重试机制，timeout建议不要设置过长
+      return !error.response;
     }; // 重试条件，默认只要是错误都需要重试
     return config;
   },
