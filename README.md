@@ -14,7 +14,7 @@
 - 路由守卫构建成单独的 js，方便管理
 - 优化打包过程
 
-v1.0 的文档请看[这里]()
+v1.0 的文档请看[这里](https://github.com/LuLuCodes/easy-front-vue-cli3/blob/master/README-1.md)
 
 ## 使用方法
 
