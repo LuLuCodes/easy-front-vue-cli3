@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import api from './api';
 import Vant from 'vant';
 import 'vant/lib/index.css';
 import common from '@/utils/common'; // 全局方法
@@ -11,6 +12,8 @@ import VueLazyload from 'vue-lazyload'; // 图片懒加载
 import './components';
 import FastClick from 'fastclick'; // 解决300毫秒问题，PC端不需要
 FastClick.attach(document.body);
+
+Vue.prototype.$api = api; // 将api挂载到vue的原型上
 
 Vue.use(Vant);
 Vue.use(VueLazyload, {

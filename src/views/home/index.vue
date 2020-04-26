@@ -198,6 +198,10 @@
 export default {
   components: {
     // 组件推荐使用异步懒加载方式
+    /** 警告：
+     * 并非所有组件都推荐使用异步懒加载，异步懒加载的组件代码并不会直接和主组件的代码一起被加载，而是在需要时才请求.
+     * 这意味着在增加了http的请求，在网络差的情况下可能出现渲染延迟的情况.
+     */
     'home-goods-item': () => import('../../components/home-goods-item')
   },
   data() {
