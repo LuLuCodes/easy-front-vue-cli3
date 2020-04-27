@@ -1,4 +1,4 @@
-// 自动加载 global 目录下的 .js 结尾的文件
+// 自动加载 global 目录下的 .js 结尾的文件（全局组件）
 
 import Vue from 'vue';
 import { upperFirst, camelCase } from 'lodash-es';
