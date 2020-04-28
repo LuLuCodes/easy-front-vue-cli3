@@ -2,7 +2,7 @@
 
 基于 vue cli3 的项目工程模板 2.0
 
-## 2.0 改进点
+## 2.0.x 改进点
 
 - vue 全套升级至最新版本
 - axios 从之前的 vuex 中独立，并挂载到 VUE 原型上
@@ -14,6 +14,7 @@
 - 路由守卫构建成单独的 js，方便管理
 - 优化打包过程(代码拆分)
 - 移除 PWA(目前 pwa 技术点没有摸透，没法构建合适生产的解决方案，暂时先移除，后面将拉单独的分支来完善)
+- 新增骨架屏
 
 v1.0 的文档请看[这里](https://github.com/LuLuCodes/easy-front-vue-cli3/blob/master/README-1.md)
 
@@ -374,7 +375,28 @@ if (
 
 是否使用 cdn，看具体场景，如果项目中用到大部分的组件，可以使用 cdn 引入！
 如果只是部分组件，特别是没有使用的 vant 业务组件时，可以按需引用！
+如果需要使用 vant 的 cdn，请在 main.js 中删除关于 plugins 的引入，并放开 vue.config.js 关于 vant cdn 的注释
 
 ## 发布小火箭
 
 发布小火箭页面在 www 目录下，在正式项目中使用时，请根据实际需求修改
+
+## 骨架屏
+
+为了优化体验，特别是在网络差的情况下的用户感官，这里新增了骨架屏的使用示例
+
+```shell
+# 安装全局插件
+cnpm i draw-page-structure -g
+```
+
+```shell
+# 生成骨架屏页面
+dps start
+```
+
+### 配置
+
+修改 dps.config.js，主要是修改骨架屏生成的 url、输出目录 output。
+默认配置下，生成的骨架屏没有动画，后期需要开发自己加入 css 动画。
+当前配置下，骨架屏生成在 skeleton 目录下，生成后需要跟 public/index.html 做结合才能使用。

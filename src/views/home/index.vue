@@ -177,11 +177,7 @@
       </div>
     </van-popup>
     <!-- 联系客服弹窗 -->
-    <van-popup
-      v-model="showLink"
-      position="center"
-      class="popup-radius popup-talk txt-c"
-    >
+    <van-popup v-model="showLink" position="center" class="popup-radius popup-talk txt-c">
       <span class="icon icon-close f16"></span>
       <p class="f24 c-333 pt25 pb25 f-b">联系客服</p>
       <div class="qr-img img-auto">
@@ -209,7 +205,7 @@ export default {
   data() {
     return {
       active: 0,
-      show: true,
+      show: false,
       showLink: false,
       icon: {
         normal: require('../../assets/images/common/store.png'),
