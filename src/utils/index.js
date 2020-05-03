@@ -49,3 +49,25 @@ export function parseTime(date, fmt = 'yyyy-MM-dd hh:mm:ss') {
   }
   return fmt;
 }
+
+export function lazyLoadView(AsyncView, delay = 200, timeout = 10000) {
+  const AsyncHandler = () => ({
+    // 需要加载的组件 (应该是一个 `Promise` 对象)
+    component: AsyncView,
+    // 异步组件加载时使用的组件
+    loading: require('@/components/router-loading'),
+    // 加载失败时使用的组件
+    error: require('@/components/router-error'),
+    // 展示加载时组件的延时时间。默认值是 200 (毫秒)
+    delay,
+    // 如果提供了超时时间，且组件加载也超时了，
+    // 则使用加载失败时使用的组件。默认值是：`Infinity`
+    timeout
+  });
+  return Promise.resolve({
+    functional: true,
+    render(h, { data, children }) {
+      return h(AsyncHandler, data, children);
+    }
+  });
+}
