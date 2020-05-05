@@ -106,7 +106,7 @@ module.exports = {
       var externals = {
         vue: 'Vue',
         axios: 'axios',
-        'vue-router': 'Router',
+        'vue-router': 'VueRouter',
         vuex: 'Vuex'
         // vant: 'Vant'
       };
