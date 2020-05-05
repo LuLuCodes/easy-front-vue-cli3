@@ -15,6 +15,8 @@
 - 优化打包过程(代码拆分)
 - 移除 PWA(目前 pwa 技术点没有摸透，没法构建合适生产的解决方案，暂时先移除，后面将拉单独的分支来完善)
 - 新增骨架屏
+- 异步路由组件，加载状态管理
+- 支持 JSX
 
 v1.0 的文档请看[这里](https://github.com/LuLuCodes/easy-front-vue-cli3/blob/master/README-1.md)
 
@@ -317,6 +319,23 @@ components: {
   */
   'home-goods-item': () => import('../../components/home-goods-item')
 }
+```
+
+## 异步路由组件，加载状态管理
+
+```js
+import { lazyLoadView } from '@/utils';
+export default [
+  {
+    path: '/home',
+    name: 'home',
+    component: () => lazyLoadView(import('@/views/home')),
+    meta: {
+      deepth: 1,
+      keepAlive: true // 需要被缓存
+    }
+  }
+];
 ```
 
 ## axios 请求重试机制
