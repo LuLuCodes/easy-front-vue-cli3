@@ -11,6 +11,7 @@ const plugins = [
 ];
 module.exports = {
   presets: [
+    '@vue/babel-preset-jsx',
     ['@vue/cli-plugin-babel/preset', { useBuiltIns: 'usage', corejs: 3 }]
   ],
   plugins
