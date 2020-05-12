@@ -1,42 +1,43 @@
-<template>
-  <!--你这里需要给小姐姐给你设计UI-->
-  <div class="router-loading">路由加载中</div>
+<template functional>
+  <div class="container">
+    <section class="loading txt-c flex all-c">
+      <div>
+        <p class="loading-icon f0">
+          <img src="../../assets/images/common/loading.svg" alt />
+        </p>
+        <h2 class="f15 c-666 pt17">页面加载中...</h2>
+      </div>
+    </section>
+  </div>
 </template>
 <script>
+
 export default {
   name: 'router-loading',
-  components: {},
   data() {
-    return {};
+    return {
+    };
   },
-  props: {
-    prop: {
-      type: Object,
-      default() {
-        return {};
-      }
-    }
-  },
-  computed: {},
-  created() {
-    // api请求尽量放在这里
-    console.log('this is created');
-  },
-  mounted() {
-    // 对数据的操作尽量放在这里
-    console.log('this is mounted');
-  },
-  updated() {
-    console.log('this is updated');
-  },
-  beforeDestroy() {
-    console.log('this is beforeDestroy');
-  },
-  watch: {},
-  methods: {}
+  methods: {
+  }
 };
 </script>
 <style lang="less" scoped>
-.router-loading {
+.loading {
+  min-height: 100vh;
+}
+.loading img {
+  width: 80px;
+  height: 80px;
+}
+.loading p.loading-icon {
+  animation: spin 500ms infinite linear;
+  line-height: 1;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+.loading /deep/ .van-button {
+  min-width: 140px;
 }
 </style>

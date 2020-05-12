@@ -2,10 +2,10 @@
   <div id="app">
     <keep-alive :include="include">
       <!-- 需要缓存的视图组件 -->
-      <router-view v-if="$route.meta.keepAlive"></router-view>
+      <router-view v-if="$route.meta.keepAlive" v-wechat-title="$route.meta.title"></router-view>
     </keep-alive>
 
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <router-view v-if="!$route.meta.keepAlive" v-wechat-title="$route.meta.title"></router-view>
   </div>
 </template>
 
@@ -42,6 +42,7 @@ export default {
 </script>
 
 <style lang="less">
-@import '//at.alicdn.com/t/font_1621680_1n91aq8ljkai.css';
+@import '../node_modules/vant/lib/index.css';
+@import '//at.alicdn.com/t/font_1787502_cau0bt8gx7g.css';
 @import './assets/css/style.less';
 </style>

@@ -4,9 +4,14 @@
 import { parseTime } from '@/utils';
 
 const filters = {
-  // 时间戳转换为 yyyy-MM-dd mm:hh:ss
   DateTime: function(time) {
+    // 时间戳转换为 yyyy-MM-dd mm:hh:ss
     return parseTime(time);
+  },
+  PhoneEncrypt: function(phone) {
+    // 手机号脱敏
+    const pat = /(\d{3})\d*(\d{4})/;
+    return phone.replace(pat, '$1****$2');
   }
 };
 
