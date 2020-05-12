@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="177px" height="177px" viewBox="0 0 177 177" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>loading</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="loading" transform="translate(0.695312, 0.500000)">
+            <path d="M0,88 C0,136.601058 39.398942,176 88,176 C136.601058,176 176,136.601058 176,88 C176,39.398942 136.601058,0 88,0 C39.398942,0 0,39.398942 0,88 Z" id="路径" fill="#C8C8C8" fill-rule="nonzero" opacity="0.5"></path>
+            <g id="编组" transform="translate(34.000000, 30.000000)">
+                <g id="路径-2" transform="translate(0.304688, 52.500000)"></g>
+                <g id="编组-2" transform="translate(13.804688, 4.500000)">
+                    <circle id="椭圆形" fill="#9B9B9B" cx="39.5" cy="96.5" r="10.5"></circle>
+                    <path d="M39.5,0 C48.5,0 50.3557914,3.88681368 50.4961629,8.73463775 L50.5,9 L48.5,69 C48.5,73.9705627 44.4705627,78 39.5,78 C34.6181973,78 30.6442086,74.1131863 30.5038371,69.2653623 L30.5,69 L28.5,9 C28.5,4.02943725 30.5,0 39.5,0 Z" id="直线" fill="#979797" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

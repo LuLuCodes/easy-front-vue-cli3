@@ -2,7 +2,7 @@ import axios from 'axios';
 import router from '@/router';
 const service = axios.create({
   // 设置超时时间
-  timeout: 6000,
+  timeout: 15000,
   baseURL: process.env.VUE_APP_BASE_API,
   withCredentials: true
 });
