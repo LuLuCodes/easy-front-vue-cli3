@@ -1,5 +1,7 @@
 # easy-front-vue-cli3
 
+本文档只描述脚手架新增特性，实际项目中使用的注意点请查阅文档[How to use](https://github.com/LuLuCodes/easy-front-vue-cli3/blob/master/HowToUse.md)
+
 基于 vue cli3 的项目工程模板 2.0
 
 ## 2.0.x 改进点

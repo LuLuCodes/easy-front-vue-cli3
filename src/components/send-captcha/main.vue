@@ -25,6 +25,14 @@ export default {
     agree: {
       type: Boolean,
       default: false
+    },
+    captchaType: {
+      type: Number,
+      default: 1
+    },
+    expireSec: {
+      type: Number,
+      default: 1200
     }
   },
   computed: {},
@@ -96,8 +104,8 @@ export default {
           data: {
             Body: {
               CellPhoneNo: this.phone,
-              CaptchaType: 1,
-              ExpireSecond: 1200
+              CaptchaType: this.captchaType,
+              ExpireSecond: this.expireSec
             }
           }
         });
