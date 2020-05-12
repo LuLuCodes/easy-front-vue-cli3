@@ -9,14 +9,25 @@
     <!-- login 表单 -->
     <div class="form-wrap">
       <van-cell-group :border="false">
-        <van-field placeholder="请输入手机号" type="number" maxlength="11" v-model="cellphone" />
-        <van-field placeholder="短信验证码" type="number" maxlength="8" v-model="captcha">
+        <van-field
+          placeholder="请输入手机号"
+          type="number"
+          maxlength="11"
+          v-model="cellphone"
+        />
+        <van-field
+          placeholder="短信验证码"
+          type="number"
+          maxlength="8"
+          v-model="captcha"
+        >
           <span
             class="van-hairline--left f13"
-            :class="canSendCaptcha ? 'c-red': 'c-gray'"
+            :class="canSendCaptcha ? 'c-red' : 'c-gray'"
             slot="button"
             @click.prevent.stop="sendCaptcha"
-          >获取验证码{{timeTip}}</span>
+            >获取验证码{{ timeTip }}</span
+          >
         </van-field>
       </van-cell-group>
       <div class="plr15 mt16">
@@ -27,7 +38,9 @@
           checked-color="#FC3636"
         >
           <span class="c-999">我已阅读并同意</span>
-          <span class="c-blue" @click.prevent.stop="showAgreement = true">《用户协议》</span>
+          <span class="c-blue" @click.prevent.stop="showAgreement = true"
+            >《用户协议》</span
+          >
         </van-checkbox>
       </div>
       <div class="btn">
@@ -40,7 +53,9 @@
           <i class="icon icon-tishi f20"></i>
         </div>
         <div class="ml2 pt2">
-          <p class="c-666">该应用为嘉品团内部运营门店管理后台，请先与业务对接人联系，确认开通账号后再登录。</p>
+          <p class="c-666">
+            该应用为嘉品团内部运营门店管理后台，请先与业务对接人联系，确认开通账号后再登录。
+          </p>
           <p class="c-666 mt20">
             客服电话：
             <span class="c-000">400 888 8888</span>
@@ -98,33 +113,6 @@ export default {
   },
   watch: {},
   methods: {
-    async getMyPoint() {
-      try {
-        this.load();
-        const pointList = await this.$api.post({
-          url: '/shop/GetAreaPointList',
-          data: {
-            Where: {
-              BossPersonSysNo: this.PersonSysNo,
-              IsEnable: 1
-            },
-            PageIndex: 1,
-            PageSize: 1
-          }
-        });
-        if (pointList.Paging.TotalCount === 1) {
-          this.$store.commit('updateSelectedPonit', pointList.List[0]);
-          this.$router.push({ path: '/home' });
-        } else if (pointList.Paging.TotalCount > 1) {
-          this.$router.push({ path: '/select-my-point' });
-        } else {
-          this.errorMsg({ message: '请联系客服配置自提点' });
-        }
-        this.unload();
-      } catch (error) {
-        this.errorMsg({ message: error.message });
-      }
-    },
     async checkCellPhone() {
       try {
         const res = await this.$api.post({
@@ -185,7 +173,6 @@ export default {
           }
         });
         this.unload();
-        await this.getMyPoint();
       } catch (error) {
         this.errorMsg({ message: error.message });
       }
