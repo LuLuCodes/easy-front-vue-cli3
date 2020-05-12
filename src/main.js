@@ -9,6 +9,7 @@ import filters from '@/utils/filters'; // 全局过滤器
 import '@/utils/permission'; // 路由守卫
 import vueTitle from 'vue-wechat-title';
 import Op from './utils/condition-operator';
+import globalMixins from '@/mixins/global-mixins';
 
 // import VueLazyload from 'vue-lazyload'; // 图片懒加载
 import './components';
@@ -23,6 +24,9 @@ Vue.prototype.$Op = Op;
 //   listenEvents: ['scroll', 'resize', 'animationend', 'transitionend'],
 //   attempt: 1
 // });
+
+// 全局混入
+Vue.mixin(globalMixins);
 
 // 注册全局过滤器
 for (const key in filters) {

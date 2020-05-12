@@ -21,13 +21,13 @@
           maxlength="8"
           v-model="captcha"
         >
-          <span
-            class="van-hairline--left f13"
-            :class="canSendCaptcha ? 'c-red' : 'c-gray'"
-            slot="button"
-            @click.prevent.stop="sendCaptcha"
-            >获取验证码{{ timeTip }}</span
-          >
+          <template #button>
+            <send-captcha
+              class="van-hairline--left"
+              :phone="cellphone"
+              :agree="agree"
+            ></send-captcha>
+          </template>
         </van-field>
       </van-cell-group>
       <div class="plr15 mt16">
@@ -73,18 +73,16 @@
 
 <script>
 import { mapState } from 'vuex';
-import agreement from '@/components/agreement';
-import mixin from '@/mixins/global-mixins';
+import Agreement from '@/components/agreement';
+import SendCaptcha from '@/components/send-captcha';
 export default {
   name: 'login',
-  mixins: [mixin],
   components: {
-    agreement
+    Agreement,
+    SendCaptcha
   },
   data() {
     return {
-      canSendCaptcha: true,
-      timeTip: '',
       cellphone: '',
       captcha: '',
       agree: false,
@@ -173,53 +171,6 @@ export default {
           }
         });
         this.unload();
-      } catch (error) {
-        this.errorMsg({ message: error.message });
-      }
-    },
-    async sendCaptcha() {
-      if (!this.canSendCaptcha) {
-        return;
-      }
-      if (!this.agree) {
-        this.$toast('请勾选用户协议');
-        return;
-      }
-      if (!this.cellphone) {
-        this.$toast('请输入手机号');
-        return;
-      }
-      try {
-        this.load();
-        const checkPhone = await this.checkCellPhone();
-        if (!checkPhone) {
-          this.unload();
-          return;
-        }
-        await this.$api.post({
-          url: '/common/SendCaptcha',
-          data: {
-            Body: {
-              CellPhoneNo: this.cellphone,
-              CaptchaType: 1,
-              ExpireSecond: 1200
-            }
-          }
-        });
-        this.unload();
-        this.$toast.success('验证码已发送');
-        this.canSendCaptcha = false;
-        let time = 60;
-        const timer = setInterval(() => {
-          time--;
-          if (time === 0) {
-            this.canSendCaptcha = true;
-            this.timeTip = '';
-            clearInterval(timer);
-          } else {
-            this.timeTip = `(${time}s)`;
-          }
-        }, 1000);
       } catch (error) {
         this.errorMsg({ message: error.message });
       }
