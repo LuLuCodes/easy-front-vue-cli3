@@ -1,0 +1,44 @@
+stages:
+  - test
+  - build
+
+cache:
+  key: ${CI_COMMIT_REF_NAME}
+  paths:
+    - node_modules
+
+job-build:
+  stage: build
+  tags:
+    - vue-h5-runner
+  only:
+    - tags
+  script:
+    - cnpm install --progress=false
+    - npm run build
+  artifacts:
+    # 使用当前stage和分支名称作为存档名称
+    name: '${CI_JOB_NAME}_${CI_COMMIT_REF_NAME}'
+    # 工件缓存的有效时间
+    expire_in: 3 days
+    # 路径
+    paths:
+      - www
+
+job-test:
+  stage: test
+  tags:
+    - vue-h5-runner
+  only:
+    - test
+  script:
+    - cnpm install --progress=false
+    - npm run test
+  artifacts:
+    # 使用当前stage和分支名称作为存档名称
+    name: '${CI_JOB_NAME}_${CI_COMMIT_REF_NAME}'
+    # 工件缓存的有效时间
+    expire_in: 3 days
+    # 路径
+    paths:
+      - www
