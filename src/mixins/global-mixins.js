@@ -1,7 +1,7 @@
 export default {
   data() {
     return {
-      loading: false
+      dataLoading: false
     };
   },
   methods: {
@@ -11,10 +11,10 @@ export default {
       forbidClick = true,
       duration = 0
     } = {}) {
-      if (this.loading) {
-        return this.loading;
+      if (this.dataLoading) {
+        return this.dataLoading;
       }
-      this.loading = true;
+      this.dataLoading = true;
       this.$toast({
         type: 'loading',
         message,
@@ -27,7 +27,7 @@ export default {
       return false;
     },
     unload() {
-      this.loading = false;
+      this.dataLoading = false;
       this.$toast.clear();
     },
     errorMsg({
@@ -36,7 +36,7 @@ export default {
       forbidClick = true,
       duration = 3000
     } = {}) {
-      this.loading = false;
+      this.dataLoading = false;
       this.$toast.clear();
       this.$toast({
         type: 'fail',
