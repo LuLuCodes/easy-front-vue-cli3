@@ -10,6 +10,9 @@ const filters = {
   },
   PhoneEncrypt: function(phone) {
     // 手机号脱敏
+    if (!phone) {
+      return phone;
+    }
     const pat = /(\d{3})\d*(\d{4})/;
     return phone.replace(pat, '$1****$2');
   }
