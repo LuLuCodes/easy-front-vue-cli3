@@ -123,7 +123,7 @@ export default {
           return false;
         }
       } catch (error) {
-        this.errorMsg({ message: error.message });
+        this.errorMsg(error.message);
       }
     },
     async login() {
@@ -145,15 +145,20 @@ export default {
         if (!checkPhone) {
           return;
         }
-        await this.dispatch('login', {
-          LoginSource: 1,
-          LoginType: 5,
-          LoginID: this.cellphone,
-          Captcha: this.captcha,
-          RegisterMsg: { IsNeedRegister: 1 }
+        // 不需要在前端暂时loading的，可以直接调用this.$store.dispatch
+        await this.dispatch({
+          method: 'login',
+          data: {
+            LoginSource: 1,
+            LoginType: 5,
+            LoginID: this.cellphone,
+            Captcha: this.captcha,
+            RegisterMsg: { IsNeedRegister: 1 }
+          },
+          message: '登录中...'
         });
       } catch (error) {
-        this.errorMsg({ message: error.message });
+        this.errorMsg(error.message);
       }
     }
   }

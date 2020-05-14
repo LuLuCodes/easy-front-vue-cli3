@@ -157,36 +157,26 @@ export default {
         return { error: error.message, result: null };
       }
     },
-    warnMsg({
-      message = '',
-      overlay = false,
-      forbidClick = true,
-      duration = 3000
-    } = {}) {
+    warnMsg(message = '') {
       if (message) {
         this.$toast.clear();
         this.$toast({
           type: 'text',
           message,
-          overlay,
-          forbidClick,
-          duration
+          overlay: false,
+          forbidClick: true,
+          duration: 2500
         });
       }
     },
-    errorMsg({
-      message = '网络异常，请稍后再试！',
-      overlay = false,
-      forbidClick = true,
-      duration = 3000
-    } = {}) {
+    errorMsg(message) {
       this.$toast.clear();
       this.$toast({
         type: 'fail',
         message,
-        overlay,
-        forbidClick,
-        duration
+        overlay: false,
+        forbidClick: true,
+        duration: 2500
       });
     },
     goBack() {
