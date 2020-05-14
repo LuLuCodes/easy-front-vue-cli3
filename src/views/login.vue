@@ -9,24 +9,10 @@
     <!-- login 表单 -->
     <div class="form-wrap">
       <van-cell-group :border="false">
-        <van-field
-          placeholder="请输入手机号"
-          type="number"
-          maxlength="11"
-          v-model="cellphone"
-        />
-        <van-field
-          placeholder="短信验证码"
-          type="number"
-          maxlength="8"
-          v-model="captcha"
-        >
+        <van-field placeholder="请输入手机号" type="number" maxlength="11" v-model="cellphone" />
+        <van-field placeholder="短信验证码" type="number" maxlength="8" v-model="captcha">
           <template #button>
-            <send-captcha
-              class="van-hairline--left"
-              :phone="cellphone"
-              :agree="agree"
-            ></send-captcha>
+            <send-captcha class="van-hairline--left" :phone="cellphone" :agree="agree"></send-captcha>
           </template>
         </van-field>
       </van-cell-group>
@@ -38,9 +24,7 @@
           checked-color="#FC3636"
         >
           <span class="c-999">我已阅读并同意</span>
-          <span class="c-blue" @click.prevent.stop="showAgreement = true"
-            >《用户协议》</span
-          >
+          <span class="c-blue" @click.prevent.stop="showAgreement = true">《用户协议》</span>
         </van-checkbox>
       </div>
       <div class="btn">
@@ -53,9 +37,7 @@
           <i class="icon icon-tishi f20"></i>
         </div>
         <div class="ml2 pt2">
-          <p class="c-666">
-            该应用为嘉品团内部运营门店管理后台，请先与业务对接人联系，确认开通账号后再登录。
-          </p>
+          <p class="c-666">该应用为嘉品团内部运营门店管理后台，请先与业务对接人联系，确认开通账号后再登录。</p>
           <p class="c-666 mt20">
             客服电话：
             <span class="c-000">400 888 8888</span>
@@ -112,8 +94,9 @@ export default {
   watch: {},
   methods: {
     async checkCellPhone() {
+      // 不需要在前端暂时loading的，可以直接调用this.$api.post
       try {
-        const res = await this.$api.post({
+        const { error, result } = await this.post({
           url: '/common/CheckLoginInStatus2',
           data: {
             Body: {
@@ -121,18 +104,22 @@ export default {
               LoginType: 4,
               LoginID: this.cellphone
             }
-          }
+          },
+          message: '检查中...'
         });
-        if (res.LoginInStatus === 2) {
+        if (error) {
+          return false;
+        }
+        if (result.LoginInStatus === 2) {
           return true;
-        } else if (res.LoginInStatus === 0) {
-          this.$toast('手机号未注册');
+        } else if (result.LoginInStatus === 0) {
+          this.warnMsg('手机号未注册');
           return false;
-        } else if (res.LoginInStatus === 1) {
-          this.$toast('手机号未激活');
+        } else if (result.LoginInStatus === 1) {
+          this.warnMsg('手机号未激活');
           return false;
-        } else if (res.LoginInStatus === 3) {
-          this.$toast('手机号已禁用');
+        } else if (result.LoginInStatus === 3) {
+          this.warnMsg('手机号已禁用');
           return false;
         }
       } catch (error) {
@@ -142,35 +129,29 @@ export default {
     async login() {
       try {
         if (!this.agree) {
-          this.$toast('请勾选用户协议');
+          this.warnMsg('请勾选用户协议');
           return;
         }
         if (!this.cellphone) {
-          this.$toast('请输入手机号');
+          this.warnMsg('请输入手机号');
           return;
         }
         if (!this.captcha) {
-          this.$toast('请输入验证码');
+          this.warnMsg('请输入验证码');
           return;
         }
-        if (this.load({ message: '登录中' })) {
-          return;
-        }
+
         const checkPhone = await this.checkCellPhone();
         if (!checkPhone) {
-          this.unload();
           return;
         }
-        await this.$store.dispatch('login', {
-          data: {
-            LoginSource: 1,
-            LoginType: 5,
-            LoginID: this.cellphone,
-            Captcha: this.captcha,
-            RegisterMsg: { IsNeedRegister: 1 }
-          }
+        await this.dispatch('login', {
+          LoginSource: 1,
+          LoginType: 5,
+          LoginID: this.cellphone,
+          Captcha: this.captcha,
+          RegisterMsg: { IsNeedRegister: 1 }
         });
-        this.unload();
       } catch (error) {
         this.errorMsg({ message: error.message });
       }
