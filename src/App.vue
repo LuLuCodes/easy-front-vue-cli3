@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { checkDevice } from '@/utils';
 export default {
   name: 'App',
   components: {},
@@ -19,6 +20,12 @@ export default {
     };
   },
   computed: {},
+  created() {
+    const { isWechat } = checkDevice();
+    if (isWechat) {
+      this.getWxJSSDK();
+    }
+  },
   beforeDestroy() {
     this.$store.commit('updateKeepAliveInclude', []);
   },
@@ -69,7 +76,7 @@ export default {
           ]
         });
         window.wx.error(function (res) {
-          // console.log(res);
+          console.error(res);
         });
       } catch (e) {
         console.error(e);
