@@ -22,7 +22,8 @@ import {
   List,
   PullRefresh,
   Lazyload,
-  Dialog
+  Dialog,
+  Picker
 } from 'vant';
 Vue.use(Search);
 Vue.use(Tab);
@@ -45,3 +46,4 @@ Vue.use(List);
 Vue.use(Lazyload);
 Vue.use(PullRefresh);
 Vue.use(Dialog);
+Vue.use(Picker);

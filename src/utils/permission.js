@@ -2,7 +2,7 @@
 import router from '@/router';
 import store from '@/store';
 
-const whiteList = ['']; // 不重定向白名单
+const whiteList = ['/test']; // 不重定向白名单
 
 // 检查是否登录
 router.beforeEach(async (to, from, next) => {
@@ -12,7 +12,7 @@ router.beforeEach(async (to, from, next) => {
     await store.dispatch('updateUserInfo', {});
   }
   if (to.path !== '/login' && !token) {
-    if (whiteList.includes(to.path)) {
+    if (whiteList.includes(to.path) !== -1) {
       return next();
     } else {
       return next('/login');

@@ -18,6 +18,7 @@ export default {
     localStorage.clear(name);
   },
   KEYS: {
-    SELECTED_POINT_ID: 'SELECTED_POINT_ID'
+    SELECTED_POINT_ID: 'SELECTED_POINT_ID',
+    AREA_LIST: 'AREA_LIST'
   }
 };

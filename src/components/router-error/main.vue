@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     reload() {
-      window.history.reload();
+      window.location.reload();
     }
   }
 };
