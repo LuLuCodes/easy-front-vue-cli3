@@ -73,7 +73,7 @@ export default {
       type: Array,
       default: () => []
     },
-    fatherArea: {
+    upAreaId: {
       type: Number,
       default: 0
     }
@@ -131,7 +131,7 @@ export default {
   methods: {
     async getAreaList() {
       const showFloorCount = this.columnsNum - 1;
-      const area = storage.get(`${storage.KEYS.AREA_LIST}_${this.fatherArea}_${showFloorCount}`);
+      const area = storage.get(`${storage.KEYS.AREA_LIST}_${this.upAreaId}_${showFloorCount}`);
       if (area) {
         this.areaList = JSON.parse(area);
         return;
@@ -139,12 +139,12 @@ export default {
       const res = await this.$api.post({
         url: '/common/GetAreaList',
         data: {
-          Extra: { FatherAreaSysNo: this.fatherArea, ShowFloorCount: showFloorCount }
+          Extra: { FatherAreaSysNo: this.upAreaId, ShowFloorCount: showFloorCount }
         }
       });
       if (res.List) {
         const list = parseArea(res.List);
-        storage.set(`${storage.KEYS.AREA_LIST}_${this.fatherArea}_${showFloorCount}`, JSON.stringify(list));
+        storage.set(`${storage.KEYS.AREA_LIST}_${this.upAreaId}_${showFloorCount}`, JSON.stringify(list));
         this.areaList = list;
       }
     },
@@ -191,9 +191,9 @@ export default {
       if (!picker) {
         return;
       }
+
       const province = this.getList('province');
       const city = this.getList('city', code.slice(0, 2));
-
       picker.setColumnValues(0, province);
       picker.setColumnValues(1, city);
 
