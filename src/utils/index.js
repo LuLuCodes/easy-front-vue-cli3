@@ -160,6 +160,7 @@ function processArea(data, obj) {
     }
   }
 }
+
 export function parseArea(area) {
   const areaList = {
     provinceList: {},

@@ -90,13 +90,6 @@ export default {
     },
     displayColumns() {
       return this.columns.slice(0, +this.columnsNum);
-    },
-    placeholderMap() {
-      return {
-        province: this.columnsPlaceholder[0] || '',
-        city: this.columnsPlaceholder[1] || '',
-        county: this.columnsPlaceholder[2] || ''
-      };
     }
   },
   created() {
@@ -238,12 +231,17 @@ export default {
       this.$emit('change', picker, getValues, index);
     },
     onCancel() {
-      this.$emit('update:show', false);
+      this.$emit('cancel');
     },
     onConfirm(values, index) {
       values = this.parseOutputValues(values);
       this.setValues();
       this.$emit('confirm', values, index);
+    },
+    // @exposed-api
+    reset(code) {
+      this.code = code || '';
+      this.setValues();
     }
   }
 };
