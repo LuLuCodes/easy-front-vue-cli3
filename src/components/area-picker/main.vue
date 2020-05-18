@@ -1,4 +1,5 @@
 <template>
+  <!-- 省市区选择组件 -->
   <van-popup v-model="show" position="bottom" :lazy-render="false">
     <van-picker
       ref="picker"

@@ -1,4 +1,5 @@
 <template functional>
+  <!-- 空列表组件 -->
   <section class="blank">
     <div class="img-auto f0 txt-c">
       <img style="width:70px;" src="../../assets/images/common/blank.png" />

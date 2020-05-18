@@ -1,4 +1,5 @@
 <template>
+  <!-- 底部菜单组件 -->
   <van-tabbar v-model="active" :z-index="100" class="tab-bar" route>
     <van-tabbar-item :to="{path: '/home'}">
       <span>嘉品团</span>

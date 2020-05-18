@@ -1,4 +1,5 @@
 <template>
+  <!-- 用户协议组件 -->
   <van-popup v-model="show" position="left" :style="{ width: '100%' }">
     <div class="container container-footer bg-gray">
       <footer class="footer-fixed flex all-c txt-c" @click="closePupop">

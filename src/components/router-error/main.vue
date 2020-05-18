@@ -1,7 +1,7 @@
 <template functional>
+  <!-- 路由加载失败组件 -->
   <div class="container">
     <section class="loading txt-c flex all-c">
-      <!-- 加载失败样式 -->
       <div>
         <p class="f0">
           <img src="../../assets/images/common/loading-fail.svg" alt />

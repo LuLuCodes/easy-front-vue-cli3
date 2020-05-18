@@ -1,4 +1,5 @@
 <template>
+  <!-- 短信验证码组件 -->
   <span
     class="f13"
     :class="canSendCaptcha ? 'c-red' : 'c-gray'"

@@ -1,4 +1,5 @@
 <template functional>
+  <!-- 路由加载中组件 -->
   <div class="container">
     <section class="loading txt-c flex all-c">
       <div>
