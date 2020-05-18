@@ -37,7 +37,45 @@ export default {
       this.$store.commit('updateKeepAliveInclude', this.include);
     }
   },
-  methods: {}
+  methods: {
+    async initWxJSSDK() {
+      try {
+        const reuslt = await this.$api.post({
+          url: '/wx/jssdk',
+          data: {
+            url: location.href.split('#')[0]
+          }
+        });
+        window.wx.config({
+          debug: false,
+          appId: reuslt.AppId,
+          timestamp: reuslt.Timestamp,
+          nonceStr: reuslt.NonceStr,
+          signature: reuslt.Signature,
+          jsApiList: [
+            'scanQRCode',
+            'getLocation',
+            'chooseImage'
+            // 'showMenuItems',
+            // 'updateTimelineShareData',
+            // 'previewImage',
+            // 'updateAppMessageShareData',
+            // 'hideOptionMenu',
+            // 'hideMenuItems',
+            // 'hideAllNonBaseMenuItem',
+            // 'uploadImage',
+            // 'downloadImage',
+            // 'chooseWXPay'
+          ]
+        });
+        window.wx.error(function (res) {
+          // console.log(res);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }
 };
 </script>
 
