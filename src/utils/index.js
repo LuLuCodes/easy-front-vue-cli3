@@ -161,6 +161,7 @@ function processArea(data, obj) {
   }
 }
 
+// 解析省市区数据，配合area-picker组件使用
 export function parseArea(area) {
   const areaList = {
     provinceList: {},
@@ -169,4 +170,28 @@ export function parseArea(area) {
   };
   processArea(area, areaList);
   return areaList;
+}
+
+// 设备检测
+export function checkDevice() {
+  const ua = navigator.userAgent;
+  const isAndroid = /(Android);?[\s/]+([\d.]+)?/.test(ua);
+  const isIpad = /(iPad).*OS\s([\d_]+)/.test(ua);
+  const isIpod = /(iPod)(.*OS\s([\d_]+))?/.test(ua);
+  const isIphone = !isIpad && /(iPhone\sOS)\s([\d_]+)/.test(ua);
+  const isWechat = /micromessenger/i.test(ua);
+  return {
+    isAndroid,
+    isIpad,
+    isIpod,
+    isIphone,
+    isWechat
+  };
+}
+
+// 模拟同步sleep机制
+export function sleep(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
 }
