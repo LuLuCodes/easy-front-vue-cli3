@@ -30,3 +30,10 @@ export function getLocalImgData(localId) {
     });
   });
 }
+
+export function previewImage({ current = '', urls = [] } = {}) {
+  window.wx.previewImage({
+    current: '', // 当前显示图片的http链接
+    urls: [] // 需要预览的图片http链接列表
+  });
+}

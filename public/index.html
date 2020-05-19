@@ -27,6 +27,10 @@
       >
     </noscript>
     <div id="app"></div>
+    <script
+      type="text/javascript"
+      src="//res.wx.qq.com/open/js/jweixin-1.4.0.js"
+    ></script>
     <% if (process.env.NODE_ENV !== 'development') { %> <% for (var js of
     htmlWebpackPlugin.options.cdn.js) { %>
     <script src="<%= js %>"></script>

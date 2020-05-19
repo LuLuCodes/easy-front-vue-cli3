@@ -9,7 +9,7 @@
       >
         <span class="icon icon-chacha f10 c-white"></span>
       </b>
-      <img v-lazy="file" />
+      <img v-lazy="file" @click.prevent.stop="onPreview(file)" />
     </div>
     <div
       class="upload-add txt-c fl"
@@ -21,7 +21,7 @@
   </div>
 </template>
 <script>
-import { chooseImage, getLocalImgData } from '@/utils/wx-jsdk';
+import { chooseImage, getLocalImgData, previewImage } from '@/utils/wx-jsdk';
 export default {
   name: 'upload-images-wx',
   components: {},
@@ -103,9 +103,9 @@ export default {
       }
     },
     async uploadOss(localIds) {
-      const { uploadPath, fileList, loading, unloading, errorMsg } = this;
+      const { uploadPath, fileList, load, unload, errorMsg } = this;
       try {
-        loading({ message: '上传中' });
+        load({ message: '上传中' });
         let promises = [];
         for (const localId of localIds) {
           promises.push(getLocalImgData(localId));
@@ -125,9 +125,14 @@ export default {
         }
         results = await Promise.all(promises);
         this.$emit('input', [...fileList, ...results]);
-        unloading();
+        unload();
       } catch (error) {
         errorMsg(error.message);
+      }
+    },
+    async onPreview(file) {
+      if (this.previewImage) {
+        previewImage({ current: file, urls: this.fileList });
       }
     }
   }

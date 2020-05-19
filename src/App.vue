@@ -23,7 +23,7 @@ export default {
   created() {
     const { isWechat } = checkDevice();
     if (isWechat) {
-      this.getWxJSSDK();
+      this.initWxJSSDK();
     }
   },
   beforeDestroy() {

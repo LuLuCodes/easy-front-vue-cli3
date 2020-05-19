@@ -5,7 +5,7 @@ export default {
     };
   },
   methods: {
-    loading({
+    load({
       message = '加载中',
       overlay = false,
       forbidClick = true,
@@ -21,7 +21,7 @@ export default {
         className: 'toast-white'
       });
     },
-    unloading() {
+    unload() {
       this.$toast.clear();
     },
     async post({
@@ -42,7 +42,7 @@ export default {
         if (!this.pending.has(prams)) {
           // 如果 pending 中不存在当前请求，则添加进去
           this.pending.set(prams, true);
-          this.loading({
+          this.load({
             message,
             overlay,
             forbidClick,
@@ -50,7 +50,7 @@ export default {
           });
           const result = await this.$api.post({ url, data });
           this.pending.delete(prams);
-          this.unloading();
+          this.unload();
           return { error: null, result };
         } else {
           console.error('this url request is wating response!');
@@ -83,7 +83,7 @@ export default {
         if (!this.pending.has(prams)) {
           // 如果 pending 中不存在当前请求，则添加进去
           this.pending.set(prams, true);
-          this.loading({
+          this.load({
             message,
             overlay,
             forbidClick,
@@ -91,7 +91,7 @@ export default {
           });
           const result = await this.$store.dispatch(method, { data });
           this.pending.delete(prams);
-          this.unloading();
+          this.unload();
           return { error: null, result };
         } else {
           console.error('this method dispatch is wating response!');
@@ -123,7 +123,7 @@ export default {
         if (!this.pending.has(prams)) {
           // 如果 pending 中不存在当前请求，则添加进去
           this.pending.set(prams, true);
-          this.loading({
+          this.load({
             message,
             overlay,
             forbidClick,
@@ -131,7 +131,7 @@ export default {
           });
           const result = await this.$api.post({ url, data });
           this.pending.delete(prams);
-          this.unloading();
+          this.unload();
           return { error: null, result };
         } else {
           console.error('this url request is wating response!');
