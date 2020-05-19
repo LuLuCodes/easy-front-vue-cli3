@@ -1,5 +1,5 @@
 <template>
-  <!-- 上传图片组件 -->
+  <!-- 微信上传图片组件 -->
   <div class="upload-list clearfix pt15">
     <div class="upload-item" v-for="(file, index) in fileList" :key="file">
       <b
