@@ -62,10 +62,10 @@ export default {
           jsApiList: [
             'scanQRCode',
             'getLocation',
-            'chooseImage'
+            'chooseImage',
+            'previewImage'
             // 'showMenuItems',
             // 'updateTimelineShareData',
-            // 'previewImage',
             // 'updateAppMessageShareData',
             // 'hideOptionMenu',
             // 'hideMenuItems',

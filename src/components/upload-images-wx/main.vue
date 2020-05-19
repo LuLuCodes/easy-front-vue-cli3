@@ -23,17 +23,35 @@
 </template>
 <script>
 export default {
-  name: 'upload-images',
+  name: 'upload-images-wx',
   components: {},
   data() {
     return {};
   },
   props: {
-    max: {
-      type: Number,
-      default: 1
+    capture: {
+      type: Array,
+      default() {
+        return ['album', 'camera'];
+      }
     },
-    basePath: {
+    deletable: {
+      type: Boolean,
+      default: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    previewImage: {
+      type: Boolean,
+      default: true
+    },
+    maxCount: {
+      type: Number,
+      default: 9
+    },
+    uploadPath: {
       type: String,
       default: ''
     }
