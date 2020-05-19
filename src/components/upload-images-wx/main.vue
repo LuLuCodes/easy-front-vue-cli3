@@ -1,34 +1,42 @@
 <template>
   <!-- 上传图片组件 -->
-  <div>
-    <slot>
-      <div class="f16 c-333 f-b">
-        <span>门店照片</span>
-      </div>
-      <p class="c-666 f12 mt8">*限1张，单张大小不大于2MB</p>
-    </slot>
-
-    <div class="upload-list clearfix pt15">
-      <div class="upload-item">
-        <b class="txt-c chacha">
-          <span class="icon icon-chacha f10 c-white"></span>
-        </b>
-        <img v-lazy="require('../../assets/images/shop.jpg')" />
-      </div>
-      <div class="upload-add txt-c fl">
-        <span class="icon icon-add c-gray f-b f20"></span>
-      </div>
+  <div class="upload-list clearfix pt15">
+    <div class="upload-item" v-for="(file, index) in fileList" :key="file">
+      <b
+        class="txt-c chacha"
+        v-if="deletable"
+        @click.prevent.stop="onDelete(file, index)"
+      >
+        <span class="icon icon-chacha f10 c-white"></span>
+      </b>
+      <img v-lazy="file" />
+    </div>
+    <div
+      class="upload-add txt-c fl"
+      v-show="fileList.length < maxCount"
+      @click.prevent.stop="onUpload"
+    >
+      <span class="icon icon-add c-gray f-b f20"></span>
     </div>
   </div>
 </template>
 <script>
+import { chooseImage, getLocalImgData } from '@/utils/wx-jsdk';
 export default {
   name: 'upload-images-wx',
   components: {},
   data() {
     return {};
   },
+  model: {
+    prop: 'fileList',
+    event: 'input'
+  },
   props: {
+    fileList: {
+      type: Array,
+      default: () => []
+    },
     capture: {
       type: Array,
       default() {
@@ -48,7 +56,7 @@ export default {
       default: true
     },
     maxCount: {
-      type: Number,
+      type: [Number, String],
       default: 9
     },
     uploadPath: {
@@ -72,7 +80,57 @@ export default {
     console.log('this is beforeDestroy');
   },
   watch: {},
-  methods: {}
+  methods: {
+    onDelete(file, index) {
+      const fileList = this.fileList.slice(0);
+      fileList.splice(index, 1);
+
+      this.$emit('input', fileList);
+      this.$emit('delete', index, file);
+    },
+    async onUpload() {
+      const { maxCount, fileList, capture, uploadOss, warnMsg, errorMsg } = this;
+      try {
+        const { localIds } = await chooseImage({ count: maxCount - fileList.length, sourceType: capture });
+        const len = maxCount - (localIds.length + fileList.length);
+        if (len < 0) {
+          warnMsg(`最多上传${maxCount}张图片`);
+        } else {
+          await uploadOss(localIds);
+        }
+      } catch (error) {
+        errorMsg(error.message);
+      }
+    },
+    async uploadOss(localIds) {
+      const { uploadPath, fileList, loading, unloading, errorMsg } = this;
+      try {
+        loading({ message: '上传中' });
+        let promises = [];
+        for (const localId of localIds) {
+          promises.push(getLocalImgData(localId));
+        }
+        let results = await Promise.all(promises);
+        promises = [];
+        for (const res of results) {
+          let { localData } = res;
+          if (localData.indexOf('data:image') === -1) {
+            localData = 'data:image/jpeg;base64,' + localData;
+          }
+          localData = localData.replace(/[\r\n]/g, '').replace('data:image/jgp', 'data:image/jpeg');
+          promises.push(this.$api.post({
+            url: '/upload/upload-base64-oss',
+            data: { fileData: localData, filePath: uploadPath }
+          }));
+        }
+        results = await Promise.all(promises);
+        this.$emit('input', [...fileList, ...results]);
+        unloading();
+      } catch (error) {
+        errorMsg(error.message);
+      }
+    }
+  }
 };
 </script>
 <style lang="less" scoped>

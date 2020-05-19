@@ -5,6 +5,25 @@ export default {
     };
   },
   methods: {
+    loading({
+      message = '加载中',
+      overlay = false,
+      forbidClick = true,
+      duration = 0
+    } = {}) {
+      this.$toast({
+        type: 'loading',
+        message,
+        overlay,
+        forbidClick,
+        duration,
+        icon: require('../assets/images/common/loading-white-1.png'),
+        className: 'toast-white'
+      });
+    },
+    unloading() {
+      this.$toast.clear();
+    },
     async post({
       url = '',
       data = {},
@@ -23,18 +42,15 @@ export default {
         if (!this.pending.has(prams)) {
           // 如果 pending 中不存在当前请求，则添加进去
           this.pending.set(prams, true);
-          this.$toast({
-            type: 'loading',
+          this.loading({
             message,
             overlay,
             forbidClick,
-            duration,
-            icon: require('../assets/images/common/loading-white-1.png'),
-            className: 'toast-white'
+            duration
           });
           const result = await this.$api.post({ url, data });
           this.pending.delete(prams);
-          this.$toast.clear();
+          this.unloading();
           return { error: null, result };
         } else {
           console.error('this url request is wating response!');
@@ -44,14 +60,7 @@ export default {
           };
         }
       } catch (error) {
-        this.$toast.clear();
-        this.$toast({
-          type: 'fail',
-          message: error.message,
-          overlay,
-          forbidClick,
-          duration
-        });
+        this.errorMsg(error.message);
         this.pending.delete(prams);
         return { error: error.message, result: null };
       }
@@ -74,18 +83,15 @@ export default {
         if (!this.pending.has(prams)) {
           // 如果 pending 中不存在当前请求，则添加进去
           this.pending.set(prams, true);
-          this.$toast({
-            type: 'loading',
+          this.loading({
             message,
             overlay,
             forbidClick,
-            duration,
-            icon: require('../assets/images/common/loading-white-1.png'),
-            className: 'toast-white'
+            duration
           });
           const result = await this.$store.dispatch(method, { data });
           this.pending.delete(prams);
-          this.$toast.clear();
+          this.unloading();
           return { error: null, result };
         } else {
           console.error('this method dispatch is wating response!');
@@ -95,14 +101,7 @@ export default {
           };
         }
       } catch (error) {
-        this.$toast.clear();
-        this.$toast({
-          type: 'fail',
-          message: error.message,
-          overlay,
-          forbidClick,
-          duration
-        });
+        this.errorMsg(error.message);
         this.pending.delete(prams);
         return { error: error.message, result: null };
       }
@@ -124,18 +123,15 @@ export default {
         if (!this.pending.has(prams)) {
           // 如果 pending 中不存在当前请求，则添加进去
           this.pending.set(prams, true);
-          this.$toast({
-            type: 'loading',
+          this.loading({
             message,
             overlay,
             forbidClick,
-            duration,
-            icon: require('../assets/images/common/loading-white-1.png'),
-            className: 'toast-white'
+            duration
           });
           const result = await this.$api.post({ url, data });
           this.pending.delete(prams);
-          this.$toast.clear();
+          this.unloading();
           return { error: null, result };
         } else {
           console.error('this url request is wating response!');
@@ -145,14 +141,7 @@ export default {
           };
         }
       } catch (error) {
-        this.$toast.clear();
-        this.$toast({
-          type: 'fail',
-          message: error.message,
-          overlay,
-          forbidClick,
-          duration
-        });
+        this.errorMsg(error.message);
         this.pending.delete(prams);
         return { error: error.message, result: null };
       }
