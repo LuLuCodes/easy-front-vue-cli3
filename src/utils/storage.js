@@ -2,7 +2,7 @@ export default {
   set: function(name, val) {
     localStorage.setItem(name, val);
   },
-  get: function(name, isjson = false) {
+  get: function(name, isjson = true) {
     const val = localStorage.getItem(name);
     if (isjson) {
       return JSON.parse(val);
