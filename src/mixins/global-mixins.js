@@ -147,12 +147,11 @@ export default {
       }
     },
     warnMsg(warn) {
-      const msg = typeof warn === 'string' ? warn : warn.message || '';
-      if (msg) {
+      if (warn) {
         this.$toast.clear();
         this.$toast({
           type: 'text',
-          msg,
+          warn,
           overlay: false,
           forbidClick: true,
           duration: 2500
