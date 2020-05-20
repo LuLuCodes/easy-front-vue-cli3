@@ -1,12 +1,14 @@
-<template functional>
+<template>
   <!-- 空列表组件 -->
-  <section class="blank">
+  <section>
     <div class="img-auto f0 txt-c">
-      <img style="width:70px;" src="../../assets/images/common/blank.png" />
+      <slot name="image">
+        <img style="width:70px;" src="../../assets/images/common/blank.png" />
+      </slot>
     </div>
+
     <p class="txt-c c-333 mt20">
-      您还没有订单，赶紧去“嘉品团”小程序
-      <br />把好货分享给你的好友吧～
+      <slot name="title">您还没有订单，赶紧去下单购买吧</slot>
     </p>
   </section>
 </template>
@@ -23,7 +25,4 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.blank {
-  padding-top: 100px;
-}
 </style>
