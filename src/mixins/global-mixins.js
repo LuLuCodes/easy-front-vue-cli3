@@ -146,27 +146,31 @@ export default {
         return { error: error.message, result: null };
       }
     },
-    warnMsg(message = '') {
-      if (message) {
+    warnMsg(warn) {
+      const msg = typeof warn === 'string' ? warn : warn.message || '';
+      if (msg) {
         this.$toast.clear();
         this.$toast({
           type: 'text',
-          message,
+          msg,
           overlay: false,
           forbidClick: true,
           duration: 2500
         });
       }
     },
-    errorMsg(message) {
-      this.$toast.clear();
-      this.$toast({
-        type: 'fail',
-        message,
-        overlay: false,
-        forbidClick: true,
-        duration: 2500
-      });
+    errorMsg(error) {
+      const msg = typeof error === 'string' ? error : error.message || '';
+      if (msg) {
+        this.$toast.clear();
+        this.$toast({
+          type: 'fail',
+          msg,
+          overlay: false,
+          forbidClick: true,
+          duration: 2500
+        });
+      }
     },
     goBack() {
       this.$router.go(-1);

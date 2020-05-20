@@ -12,7 +12,12 @@
         <van-field placeholder="请输入手机号" type="number" maxlength="11" v-model="cellphone" />
         <van-field placeholder="短信验证码" type="number" maxlength="8" v-model="captcha">
           <template #button>
-            <send-captcha class="van-hairline--left" :phone="cellphone" :agree="agree"></send-captcha>
+            <send-captcha
+              ref="captcha"
+              class="van-hairline--left"
+              :phone="cellphone"
+              @click.native="sendCaptcha"
+            ></send-captcha>
           </template>
         </van-field>
       </van-cell-group>
@@ -160,6 +165,13 @@ export default {
       } catch (error) {
         this.errorMsg(error.message);
       }
+    },
+    sendCaptcha() {
+      if (!this.agree) {
+        this.warnMsg('请勾选用户协议');
+        return;
+      }
+      this.$refs.captcha.send();
     }
   }
 };

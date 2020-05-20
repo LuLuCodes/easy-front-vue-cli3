@@ -1,11 +1,6 @@
 <template>
   <!-- 短信验证码组件 -->
-  <span
-    class="f13"
-    :class="canSendCaptcha ? 'c-red' : 'c-gray'"
-    slot="button"
-    @click.prevent.stop="sendCaptcha"
-  >获取验证码{{ timeTip }}</span>
+  <span class="f13" :class="canSend ? 'c-red' : 'c-gray'" slot="button">获取验证码{{ timeTip }}</span>
 </template>
 <script>
 export default {
@@ -13,7 +8,7 @@ export default {
   components: {},
   data() {
     return {
-      canSendCaptcha: true,
+      canSend: true,
       timeTip: ''
     };
   },
@@ -21,10 +16,6 @@ export default {
     phone: {
       type: String,
       default: ''
-    },
-    agree: {
-      type: Boolean,
-      default: false
     },
     captchaType: {
       type: Number,
@@ -85,13 +76,8 @@ export default {
         this.errorMsg(error.message);
       }
     },
-    async sendCaptcha() {
-      if (!this.canSendCaptcha) {
-        return;
-      }
-      if (!this.agree) {
-        console.log(123123);
-        this.warnMsg('请勾选用户协议');
+    async send() {
+      if (!this.canSend) {
         return;
       }
       if (!this.phone) {
@@ -115,12 +101,12 @@ export default {
           message: '发送中...'
         });
         this.$toast.success('验证码已发送');
-        this.canSendCaptcha = false;
+        this.canSend = false;
         let time = 60;
         const timer = setInterval(() => {
           time--;
           if (time === 0) {
-            this.canSendCaptcha = true;
+            this.canSend = true;
             this.timeTip = '';
             clearInterval(timer);
           } else {
