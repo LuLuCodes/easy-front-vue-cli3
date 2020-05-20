@@ -1,6 +1,6 @@
 <template>
   <!-- 省市区选择组件 -->
-  <van-popup v-model="show" position="bottom" :lazy-render="false">
+  <van-popup :value="show" position="bottom" :lazy-render="false">
     <van-picker
       ref="picker"
       show-toolbar
@@ -232,11 +232,13 @@ export default {
       this.$emit('change', picker, getValues, index);
     },
     onCancel() {
+      this.$emit('update:show', false);
       this.$emit('cancel');
     },
     onConfirm(values, index) {
       values = this.parseOutputValues(values);
       this.setValues();
+      this.$emit('update:show', false);
       this.$emit('confirm', values, index);
     },
     // @exposed-api
