@@ -235,11 +235,11 @@ export default {
       this.$emit('update:show', false);
       this.$emit('cancel');
     },
-    onConfirm(values, index) {
+    onConfirm(values, indexs) {
       values = this.parseOutputValues(values);
       this.setValues();
       this.$emit('update:show', false);
-      this.$emit('confirm', values, index);
+      this.$emit('confirm', values, indexs);
     },
     // @exposed-api
     reset(code) {
