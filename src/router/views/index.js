@@ -7,7 +7,8 @@ export default [
     meta: {
       title: '登录',
       deepth: 0,
-      keepAlive: false
+      keepAlive: false,
+      auth: false
     }
   }
 ];
