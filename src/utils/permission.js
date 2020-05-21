@@ -9,7 +9,8 @@ router.beforeEach(async (to, from, next) => {
   if (token && store.state.user.UserSysNo === 0) {
     await store.dispatch('updateUserInfo', {});
   }
-  if (to.path !== '/login' && !token && to.auth) {
+  const { path, meta } = to;
+  if (path !== '/login' && !token && meta.auth) {
     return next('/login');
   } else if (to.path === '/login' && token) {
     return next('/home');

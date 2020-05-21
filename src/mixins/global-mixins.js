@@ -159,7 +159,10 @@ export default {
       }
     },
     errorMsg(error) {
-      const msg = typeof error === 'string' ? error : error.message || '';
+      const msg =
+        typeof error === 'string'
+          ? error
+          : error.message || '网络异常，请稍后再试';
       if (msg) {
         this.$toast.clear();
         this.$toast({
