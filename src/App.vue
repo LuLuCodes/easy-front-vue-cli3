@@ -10,16 +10,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { checkDevice } from '@/utils';
 export default {
   name: 'App',
   components: {},
   data() {
     return {
-      include: []
     };
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      keepAliveInclude: state => state.keepAliveInclude
+    })
+  },
   created() {
     const { isWechat } = checkDevice();
     if (isWechat) {
@@ -31,17 +35,18 @@ export default {
   },
   watch: {
     $route(to, from) {
+      const include = [...this.keepAliveInclude];
       // 如果 要 to(进入) 的页面是需要 keepAlive 缓存的，把 name push 进 include数组
       if (to.meta.keepAlive) {
-        this.include.indexOf(to.name) === -1 && this.include.push(to.name);
+        include.indexOf(to.name) === -1 && include.push(to.name);
       }
       // 如果 要 form(离开) 的页面是 keepAlive缓存的，
       // 再根据 deepth 来判断是前进还是后退
       if (from.meta.keepAlive && to.meta.deepth <= from.meta.deepth) {
-        var index = this.include.indexOf(from.name);
-        index !== -1 && this.include.splice(index, 1);
+        var index = include.indexOf(from.name);
+        index !== -1 && include.splice(index, 1);
       }
-      this.$store.commit('updateKeepAliveInclude', this.include);
+      this.$store.commit('updateKeepAliveInclude', include);
     }
   },
   methods: {
