@@ -182,11 +182,11 @@ module.exports = {
     }
   },
   devServer: {
-    watchOptions: {
-      aggregateTimeout: 5000,
-      poll: true,
-      ignored: ['node_modules']
-    }, // 如果在docker开发环境下运行，请开启此项
+    // watchOptions: {
+    //   aggregateTimeout: 5000,
+    //   poll: true,
+    //   ignored: ['node_modules']
+    // }, // 如果在docker开发环境下运行，请开启此项
     port: 8080, // 端口号
     // host: 'localhost',
     https: false, // https:{type:Boolean}
