@@ -33,8 +33,7 @@ export default {
       duration = 0
     } = {}) {
       if (!url && typeof url === 'string') {
-        console.error('need a string url!');
-        return { error: 'need a string url!', result: null };
+        throw new Error('need a string url!');
       }
 
       const prams = [url, JSON.stringify(data)].join('&');
@@ -51,18 +50,14 @@ export default {
           const result = await this.$api.post({ url, data });
           this.pending.delete(prams);
           this.unload();
-          return { error: null, result };
+          return result;
         } else {
           console.error('this url request is wating response!');
-          return {
-            error: 'this url request is wating response!',
-            result: null
-          };
+          return null;
         }
       } catch (error) {
-        this.errorMsg(error.message);
         this.pending.delete(prams);
-        return { error: error.message, result: null };
+        throw new Error(error.message);
       }
     },
     async dispatch({
@@ -74,8 +69,7 @@ export default {
       duration = 0
     } = {}) {
       if (!method && typeof url === 'string') {
-        console.error('need a string method!');
-        return { error: 'need a string method!', result: null };
+        throw new Error('need a string url!');
       }
 
       const prams = [method, JSON.stringify(data)].join('&');
@@ -92,18 +86,14 @@ export default {
           const result = await this.$store.dispatch(method, { data });
           this.pending.delete(prams);
           this.unload();
-          return { error: null, result };
+          return result;
         } else {
           console.error('this method dispatch is wating response!');
-          return {
-            error: 'this method dispatch is wating response!',
-            result: null
-          };
+          return null;
         }
       } catch (error) {
-        this.errorMsg(error.message);
         this.pending.delete(prams);
-        return { error: error.message, result: null };
+        throw new Error(error.message);
       }
     },
     async get({
@@ -115,8 +105,7 @@ export default {
       duration = 0
     } = {}) {
       if (!url && typeof url === 'string') {
-        console.error('need a string url!');
-        return { error: 'need a string url!', result: null };
+        throw new Error('need a string url!');
       }
       const prams = [url, JSON.stringify(data)].join('&');
       try {
@@ -132,18 +121,14 @@ export default {
           const result = await this.$api.post({ url, data });
           this.pending.delete(prams);
           this.unload();
-          return { error: null, result };
+          return result;
         } else {
           console.error('this url request is wating response!');
-          return {
-            error: 'this url request is wating response!',
-            result: null
-          };
+          return null;
         }
       } catch (error) {
-        this.errorMsg(error.message);
         this.pending.delete(prams);
-        return { error: error.message, result: null };
+        throw new Error(error.message);
       }
     },
     warnMsg(warn) {
