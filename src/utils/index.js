@@ -185,6 +185,7 @@ export function checkDevice() {
     isIpad,
     isIpod,
     isIphone,
+    isIOS: isIpad || isIpod || isIphone,
     isWechat
   };
 }
