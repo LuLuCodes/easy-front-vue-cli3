@@ -52,10 +52,11 @@ export default {
           this.unload();
           return result;
         } else {
-          console.error('this url request is wating response!');
+          console.error(`this '${url}' request is wating response!`);
           return null;
         }
       } catch (error) {
+        console.error(error.message);
         this.pending.delete(prams);
         throw new Error(error.message);
       }
@@ -88,10 +89,11 @@ export default {
           this.unload();
           return result;
         } else {
-          console.error('this method dispatch is wating response!');
+          console.error(`this '${method}' dispatch is wating response!`);
           return null;
         }
       } catch (error) {
+        console.error(error.message);
         this.pending.delete(prams);
         throw new Error(error.message);
       }
@@ -123,10 +125,11 @@ export default {
           this.unload();
           return result;
         } else {
-          console.error('this url request is wating response!');
+          console.error(`this '${url}' request is wating response!`);
           return null;
         }
       } catch (error) {
+        console.error(error.message);
         this.pending.delete(prams);
         throw new Error(error.message);
       }

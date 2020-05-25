@@ -101,7 +101,7 @@ export default {
     async checkCellPhone() {
       // 不需要在前端暂时loading的，可以直接调用this.$api.post
       try {
-        const { error, result } = await this.post({
+        const result = await this.post({
           url: '/common/CheckLoginInStatus2',
           data: {
             Body: {
@@ -112,7 +112,7 @@ export default {
           },
           message: '检查中...'
         });
-        if (error) {
+        if (!result) {
           return false;
         }
         if (result.LoginInStatus === 2) {
