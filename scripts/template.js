@@ -24,17 +24,17 @@ export default {
   computed: {},
   created() {
     // api请求尽量放在这里
-    console.log('this is created');
+    // TODO
   },
   mounted() {
     // 对数据的操作尽量放在这里
-    console.log('this is mounted');
+    // TODO
   },
   updated() {
-    console.log('this is updated');
+    // TODO
   },
   beforeDestroy() {
-    console.log('this is beforeDestroy');
+    // TODO
   },
   watch: {},
   methods: {}

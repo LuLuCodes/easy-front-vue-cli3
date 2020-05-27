@@ -8,7 +8,7 @@
         </p>
         <h2 class="f15 c-666 pt17">加载页面失败</h2>
         <p class="f12 c-999 pt4 pb25">请检查您的设备是否联网</p>
-        <van-button round type="default" @click.prevent.stop="reload">重新加载</van-button>
+        <van-button round type="default" onclick="window.location.reload();">重新加载</van-button>
       </div>
     </section>
   </div>
@@ -22,9 +22,6 @@ export default {
     };
   },
   methods: {
-    reload() {
-      window.location.reload();
-    }
   }
 };
 </script>
