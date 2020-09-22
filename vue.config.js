@@ -1,5 +1,5 @@
 // vue.config.js
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
@@ -21,13 +21,13 @@ module.exports = {
   configureWebpack: config => {
     if (IS_PROD) {
       config.plugins.push(
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            warnings: false,
+        new TerserPlugin({
+          terserOptions: {
+            mangle: true,
             compress: {
-              drop_debugger: true, // console
-              drop_console: true,
-              pure_funcs: ['console.log'] // 移除console
+              drop_console: true, // 传true就是干掉所有的console.*这些函数的调用.
+              drop_debugger: true, // 干掉那些debugger;
+              pure_funcs: ['console.log'] // 如果你要干掉特定的函数比如console.info ，又想删掉后保留其参数中的副作用，那用pure_funcs来处理
             }
           },
           sourceMap: false,
