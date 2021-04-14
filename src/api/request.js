@@ -1,5 +1,5 @@
 import axios from 'axios';
-import router from '@/router';
+// import router from '@/router';
 const service = axios.create({
   // 设置超时时间
   timeout: 15000,
@@ -24,7 +24,9 @@ service.interceptors.request.use(
     // if (authToken) {
     //   config.headers['Authorization'] = `Bearer ${authToken}`;
     // }
-    if (config.data.Extra) {
+    // console.log('config', config);
+    const action = config.url.split('/');
+    if (action[action.length - 1].indexOf('get') === 0) {
       // 只在查询时做重试
       config.retry = 2; // 重试次数
       config.retryDelay = 500; // 重试延时
@@ -51,7 +53,7 @@ service.interceptors.response.use(
     const responseCode = response.status;
     // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
     // 否则的话抛出错误
-    if (responseCode === 200) {
+    if (responseCode === 200 || responseCode === 201) {
       // if (response.data.Data && response.data.Data.authToken) {
       //   window.localStorage.setItem('authToken', response.data.Data.authToken);
       // }
@@ -77,13 +79,13 @@ service.interceptors.response.use(
           // 重试次数自增
           config.__retryCount += 1;
           // 延时处理
-          const backoff = new Promise(function(resolve) {
-            setTimeout(function() {
+          const backoff = new Promise(function (resolve) {
+            setTimeout(function () {
               resolve();
             }, config.retryDelay || 1);
           });
           // 重新发起axios请求
-          return backoff.then(function() {
+          return backoff.then(function () {
             return service(config);
           });
         }
@@ -116,14 +118,14 @@ service.interceptors.response.use(
         // 弹出错误信息
         // window.localStorage.removeItem('authToken');
         // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
-        setTimeout(() => {
-          router.replace({
-            path: '/login',
-            query: {
-              redirect: router.currentRoute.fullPath
-            }
-          });
-        }, 1000);
+        // setTimeout(() => {
+        //   router.replace({
+        //     path: '/login',
+        //     query: {
+        //       redirect: router.currentRoute.fullPath
+        //     }
+        //   });
+        // }, 1000);
         break;
       // 404请求不存在
       case 404:

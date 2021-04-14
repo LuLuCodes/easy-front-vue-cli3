@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta http-equiv="pragram" content="no-cache" />
-    <meta
-      http-equiv="cache-control"
-      content="no-cache, no-store, must-revalidate"
-    />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <link href="//cdn.myun.info/vant-2.6.2/index.css" rel="stylesheet" />
-    <% if (process.env.NODE_ENV !== 'development') { %>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="pragram" content="no-cache" />
+  <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+  <link href="//cdn.myun.info/vant-2.6.2/index.css" rel="stylesheet" />
+  <% if (process.env.NODE_ENV !=='development' ) { %>
     <!-- 使用CDN的CSS文件 -->
     <% for (var css of htmlWebpackPlugin.options.cdn.css) { %>
-    <link href="<%= css %>" rel="stylesheet" />
-    <% } %> <% } %>
-    <title>vue-cli3-project</title>
-  </head>
+      <link href="<%= css %>" rel="stylesheet" />
+      <% } %>
+        <% } %>
+          <title>vue-cli3-project</title>
+</head>
 
-  <body>
-    <noscript>
-      <strong
-        >We're sorry but vue-cli3-project doesn't work properly without
-        JavaScript enabled. Please enable it to continue.</strong
-      >
-    </noscript>
-    <div id="app"></div>
-    <script
-      type="text/javascript"
-      src="//res.wx.qq.com/open/js/jweixin-1.4.0.js"
-    ></script>
-    <% if (process.env.NODE_ENV !== 'development') { %> <% for (var js of
-    htmlWebpackPlugin.options.cdn.js) { %>
-    <script src="<%= js %>"></script>
-    <% } %> <% } %>
-    <!-- built files will be auto injected -->
-  </body>
+<body>
+  <noscript>
+    <strong>We're sorry but vue-cli3-project doesn't work properly without
+      JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+  <% if (process.env.NODE_ENV !=='development' ) { %>
+    <% for (var js of htmlWebpackPlugin.options.cdn.js) { %>
+      <script src="<%= js %>"></script>
+      <% } %>
+        <% } %>
+          <!-- built files will be auto injected -->
+</body>
+
 </html>

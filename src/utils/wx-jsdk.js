@@ -1,3 +1,41 @@
+export async function initWxJSSDK() {
+  try {
+    const reuslt = await this.$api.post({
+      url: '/wx/jssdk',
+      data: {
+        url: location.href.split('#')[0]
+      }
+    });
+    window.wx.config({
+      debug: false,
+      appId: reuslt.AppId,
+      timestamp: reuslt.Timestamp,
+      nonceStr: reuslt.NonceStr,
+      signature: reuslt.Signature,
+      jsApiList: [
+        'scanQRCode',
+        'getLocation',
+        'chooseImage',
+        'previewImage'
+        // 'showMenuItems',
+        // 'updateTimelineShareData',
+        // 'updateAppMessageShareData',
+        // 'hideOptionMenu',
+        // 'hideMenuItems',
+        // 'hideAllNonBaseMenuItem',
+        // 'uploadImage',
+        // 'downloadImage',
+        // 'chooseWXPay'
+      ]
+    });
+    window.wx.error(function (res) {
+      console.error(res);
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 export function chooseImage({
   count = 9,
   sourceType = ['album', 'camera']

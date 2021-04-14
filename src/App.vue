@@ -2,16 +2,15 @@
   <div id="app">
     <keep-alive :include="include">
       <!-- 需要缓存的视图组件 -->
-      <router-view v-if="$route.meta.keepAlive" v-wechat-title="$route.meta.title"></router-view>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
 
-    <router-view v-if="!$route.meta.keepAlive" v-wechat-title="$route.meta.title"></router-view>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import { checkDevice } from '@/utils';
 export default {
   name: 'App',
   components: {},
@@ -25,10 +24,6 @@ export default {
     })
   },
   created() {
-    const { isWechat } = checkDevice();
-    if (isWechat) {
-      this.initWxJSSDK();
-    }
   },
   beforeDestroy() {
     this.$store.commit('updateKeepAliveInclude', []);
@@ -50,49 +45,10 @@ export default {
     }
   },
   methods: {
-    async initWxJSSDK() {
-      try {
-        const reuslt = await this.$api.post({
-          url: '/wx/jssdk',
-          data: {
-            url: location.href.split('#')[0]
-          }
-        });
-        window.wx.config({
-          debug: false,
-          appId: reuslt.AppId,
-          timestamp: reuslt.Timestamp,
-          nonceStr: reuslt.NonceStr,
-          signature: reuslt.Signature,
-          jsApiList: [
-            'scanQRCode',
-            'getLocation',
-            'chooseImage',
-            'previewImage'
-            // 'showMenuItems',
-            // 'updateTimelineShareData',
-            // 'updateAppMessageShareData',
-            // 'hideOptionMenu',
-            // 'hideMenuItems',
-            // 'hideAllNonBaseMenuItem',
-            // 'uploadImage',
-            // 'downloadImage',
-            // 'chooseWXPay'
-          ]
-        });
-        window.wx.error(function (res) {
-          console.error(res);
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    }
   }
 };
 </script>
 
 <style lang="less">
-@import '../node_modules/vant/lib/index.css';
-@import '//at.alicdn.com/t/font_1787502_cau0bt8gx7g.css';
 @import './assets/css/style.less';
 </style>
